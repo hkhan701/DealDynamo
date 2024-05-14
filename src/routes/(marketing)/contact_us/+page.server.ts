@@ -31,11 +31,6 @@ export const actions = {
       errors["email"] = "Invalid email"
     }
 
-    const company = formData.get("company")?.toString() ?? ""
-    if (company.length > 500) {
-      errors["company"] = "Company too long"
-    }
-
     const phone = formData.get("phone")?.toString() ?? ""
     if (phone.length > 100) {
       errors["phone"] = "Phone number too long"
@@ -58,7 +53,6 @@ export const actions = {
         first_name: firstName,
         last_name: lastName,
         email,
-        company_name: company,
         phone,
         message_body: message,
         updated_at: new Date(),

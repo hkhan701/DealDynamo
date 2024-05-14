@@ -11,7 +11,6 @@ export interface Database {
     Tables: {
       contact_requests: {
         Row: {
-          company_name: string | null
           email: string | null
           first_name: string | null
           id: string
@@ -21,7 +20,6 @@ export interface Database {
           updated_at: Date | null
         }
         Insert: {
-          company_name?: string | null
           email?: string | null
           first_name?: string | null
           id?: string
@@ -31,7 +29,6 @@ export interface Database {
           updated_at?: Date | null
         }
         Update: {
-          company_name?: string | null
           email?: string | null
           first_name?: string | null
           id?: string
@@ -48,24 +45,18 @@ export interface Database {
           full_name: string | null
           id: string
           updated_at: string | null
-          company_name: string | null
-          website: string | null
         }
         Insert: {
           avatar_url?: string | null
           full_name?: string | null
           id: string
           updated_at?: Date | null
-          company_name?: string | null
-          website?: string | null
         }
         Update: {
           avatar_url?: string | null
           full_name?: string | null
           id?: string
           updated_at?: string | null
-          company_name?: string | null
-          website?: string | null
         }
         Relationships: [
           {

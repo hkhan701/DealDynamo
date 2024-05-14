@@ -32,12 +32,6 @@
       autocomplete: "tel",
     },
     {
-      id: "company",
-      label: "Company Name",
-      inputType: "text",
-      autocomplete: "organization",
-    },
-    {
       id: "message",
       label: "Message",
       inputType: "textarea",

@@ -3,9 +3,7 @@ create table profiles (
   id uuid references auth.users on delete cascade not null primary key,
   updated_at timestamp with time zone,
   full_name text,
-  company_name text,
-  avatar_url text,
-  website text
+  avatar_url text
 );
 -- Set up Row Level Security (RLS)
 -- See https://supabase.com/docs/guides/auth/row-level-security for more details.
@@ -40,7 +38,7 @@ create table contact_requests (
   last_name text,
   email text,
   phone text,
-  company_name text,
+  -- company_name text,
   message_body text
 );
 alter table contact_requests enable row level security;
