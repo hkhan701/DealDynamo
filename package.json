@@ -41,5 +41,8 @@
     "@supabase/auth-ui-svelte": "^0.2.2",
     "@supabase/supabase-js": "^2.33.0",
     "stripe": "^13.3.0"
+  },
+  "engines": {
+    "node": "18.x"
   }
 }
