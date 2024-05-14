@@ -8,15 +8,16 @@
   </div>
   <div class="flex-none">
     <ul class="menu menu-horizontal px-1 hidden sm:flex font-bold text-lg">
-      <li class="md:mx-4">
+      <!-- <li class="md:mx-4">
         <a
           href="https://github.com/CriticalMoments/CMSaasStarter"
           class="border border-primary">★ us on Github</a
         >
-      </li>
-      <li class="md:mx-2"><a href="/blog">Blog</a></li>
-      <li class="md:mx-2"><a href="/pricing">Pricing</a></li>
+      </li> -->
+      <li class="md:mx-2"><a href="/pricing">Pricing 🏷️</a></li>
       <li class="md:mx-2"><a href="/account">Account</a></li>
+      <li class="md:mx-2"><a href="/contact_us">Contact Us</a></li>
+      <li class="md:mx-2"><a href="/blog">Blog</a></li>
     </ul>
     <div class="dropdown dropdown-end sm:hidden">
       <!-- svelte-ignore a11y-label-has-associated-control -->
