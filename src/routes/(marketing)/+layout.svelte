@@ -45,12 +45,12 @@
         <li><a href="/blog">Blog</a></li>
         <li><a href="/pricing">Pricing</a></li>
         <li><a href="/account">Account</a></li>
-        <li>
+        <!-- <li>
           <a
             href="https://github.com/CriticalMoments/CMSaasStarter"
             class="border border-primary">★ us on Github</a
           >
-        </li>
+        </li> -->
       </ul>
     </div>
   </div>
@@ -61,6 +61,7 @@
 </div>
 
 <!-- Spacer grows so the footer can be at bottom on short pages -->
+<!-- FOOTER -->
 <div class="flex-grow"></div>
 <div class="">
   <div class="border-t max-w-[1000px] mx-auto"></div>
