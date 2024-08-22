@@ -130,7 +130,7 @@
   {@html jsonldScript}
 </svelte:head>
 
-<div class="hero min-h-[60vh]">
+<div class="hero min-h-[30vh]">
   <div class="hero-content text-center py-12">
     <div class="max-w-xl">
       <div
@@ -164,7 +164,7 @@
 </div>
 
 <div class="min-h-[60vh]">
-  <div class="pt-20 pb-8 px-7">
+  <div class="pt-10 pb-8 px-7">
     <div class="max-w-lg mx-auto text-center">
       <div
         class="text-3xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent"
