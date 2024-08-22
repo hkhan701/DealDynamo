@@ -14,8 +14,8 @@
           class="border border-primary">★ us on Github</a
         >
       </li> -->
-      <li class="md:mx-2"><a href="/pricing">Pricing 🏷️</a></li>
       <li class="md:mx-2"><a href="/account">Account</a></li>
+      <li class="md:mx-2"><a href="/pricing">Pricing</a></li>
       <li class="md:mx-2"><a href="/contact_us">Contact Us</a></li>
       <li class="md:mx-2"><a href="/blog">Blog</a></li>
     </ul>
@@ -42,9 +42,11 @@
         tabindex="0"
         class="menu menu-lg dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52 font-bold"
       >
-        <li><a href="/blog">Blog</a></li>
-        <li><a href="/pricing">Pricing</a></li>
         <li><a href="/account">Account</a></li>
+        <li><a href="/pricing">Pricing</a></li>
+        <li class="md:mx-2"><a href="/contact_us">Contact Us</a></li>
+        <li><a href="/blog">Blog</a></li>
+
         <!-- <li>
           <a
             href="https://github.com/CriticalMoments/CMSaasStarter"

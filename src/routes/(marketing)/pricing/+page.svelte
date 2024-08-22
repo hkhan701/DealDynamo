@@ -55,60 +55,113 @@
 
 <div class="min-h-[70vh] pb-8 pt-[5vh] px-4">
   <h1 class="text-3xl font-bold text-center">Pricing</h1>
-  <h2 class="text-xl text-center text-slate-500 mt-1 pb-3">
-    Totally free, scale to millions of users
-  </h2>
+  <h2 class="text-xl text-center text-slate-500 mt-1 pb-3">Totally free</h2>
 
   <div class="w-full my-8">
     <PricingModule callToAction="Get Started" highlightedPlanId="pro" />
-    <h1 class="text-2xl font-bold text-center mt-24">Pricing FAQ</h1>
+    <h1 class="text-2xl font-bold text-center mt-24">FAQ</h1>
+
     <div class="flex place-content-center">
       <div class="join join-vertical max-w-xl py-6 mx-auto">
         <div class="collapse collapse-arrow join-item border border-primary">
           <input type="radio" name="faq-accordion" />
           <div class="collapse-title text-lg font-medium">
-            Is this template free to use?
-          </div>
-          <div class="collapse-content">
-            <p>Yup! This template is free to use for any project.</p>
-          </div>
-        </div>
-        <div class="collapse collapse-arrow join-item border border-primary">
-          <input type="radio" name="faq-accordion" />
-          <div class="collapse-title text-lg font-medium">
-            Why does a free template have a pricing page?
+            Is this software really free of charge to use?
           </div>
           <div class="collapse-content">
             <p>
-              The pricing page is part of the boilerplate. It shows how the
-              pricing page integrates into the billing portal and the Stripe
-              Checkout flows.
+              Yes, the software is completely free to use. You can sit back and
+              relax while it does all the work for you.
             </p>
           </div>
         </div>
         <div class="collapse collapse-arrow join-item border border-primary">
           <input type="radio" name="faq-accordion" />
           <div class="collapse-title text-lg font-medium">
-            What license is the template under?
+            How does the software help Amazon affiliate marketers?
           </div>
           <div class="collapse-content">
-            <p>The template is under the MIT license.</p>
+            <p>
+              Our software continuously scrapes Amazon for the best deals and
+              automatically posts them to your Facebook page or group. This
+              saves you hours of manual searching and posting.
+            </p>
           </div>
         </div>
         <div class="collapse collapse-arrow join-item border border-primary">
           <input type="radio" name="faq-accordion" />
           <div class="collapse-title text-lg font-medium">
-            Can I try out purchase flows without real a credit card?
+            What type of products does the software scrape?
           </div>
           <div class="collapse-content">
             <p>
-              Our demo page <a href="https://saasstarter.work" class="link"
-                >SaasStarter.work</a
-              > has a functional demo page, using Stripe's test environment.
+              We scrape over 150 various categories from Amazon allowing you to
+              reach a wider audience.
             </p>
-            <p class="mt-4">
-              You can use the credit card number 4242 4242 4242 4242 with any
-              future expiry date to test the payment and upgrade flows.
+          </div>
+        </div>
+        <div class="collapse collapse-arrow join-item border border-primary">
+          <input type="radio" name="faq-accordion" />
+          <div class="collapse-title text-lg font-medium">
+            Can I customize the posts?
+          </div>
+          <div class="collapse-content">
+            <p>
+              Yes, you can currently choose between choosing to post automatic
+              links only or to randomize between automatic links and including
+              an image with a link in the description of each post.
+            </p>
+          </div>
+        </div>
+        <div class="collapse collapse-arrow join-item border border-primary">
+          <input type="radio" name="faq-accordion" />
+          <div class="collapse-title text-lg font-medium">
+            How do I set up the posting schedule?
+          </div>
+          <div class="collapse-content">
+            <p>
+              You can configure the times you want your posts to run, the number
+              of posts per session, and the delay between each session and each
+              post.
+            </p>
+          </div>
+        </div>
+        <div class="collapse collapse-arrow join-item border border-primary">
+          <input type="radio" name="faq-accordion" />
+          <div class="collapse-title text-lg font-medium">
+            How many Facebook accounts can I use?
+          </div>
+          <div class="collapse-content">
+            <p>
+              You can use up to three different Facebook logins to post to your
+              Facebook group.
+            </p>
+          </div>
+        </div>
+        <div class="collapse collapse-arrow join-item border border-primary">
+          <input type="radio" name="faq-accordion" />
+          <div class="collapse-title text-lg font-medium">
+            What happens with my affiliate link?
+          </div>
+          <div class="collapse-content">
+            <p>
+              Your affiliate link will be included in 70% of the posts made by
+              the software, allowing you to benefit from the deals posted. We
+              are able to offer this service for free because we include our
+              affiliate link in the remaining 30% of the posts.
+            </p>
+          </div>
+        </div>
+        <div class="collapse collapse-arrow join-item border border-primary">
+          <input type="radio" name="faq-accordion" />
+          <div class="collapse-title text-lg font-medium">
+            Are there any upcoming features?
+          </div>
+          <div class="collapse-content">
+            <p>
+              Yes, we're working on adding custom messages for deals, special
+              messages, and expanding the software to support more countries
+              beyond Canada.
             </p>
           </div>
         </div>
@@ -142,12 +195,12 @@
       </defs>
     </svg>
 
-    <h1 class="text-2xl font-bold text-center mt-16">Plan Features</h1>
+    <!-- <h1 class="text-2xl font-bold text-center mt-16">Plan Features</h1>
     <h2 class="text-xl text-center text-slate-500 mt-1 pb-3">
       Example feature table
-    </h2>
+    </h2> -->
 
-    <div class="overflow-visible mx-auto max-w-xl mt-4">
+    <!-- <div class="overflow-visible mx-auto max-w-xl mt-4">
       <table class="table">
         <thead
           class="text-lg sticky top-0 bg-base-100 bg-opacity-50 z-10 backdrop-blur"
@@ -210,6 +263,6 @@
           {/each}
         </tbody>
       </table>
-    </div>
+    </div> -->
   </div>
 </div>
