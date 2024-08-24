@@ -80,7 +80,7 @@
     <nav class="grid grid-flow-col gap-4">
       <a class="link link-hover" href="/">Overview</a>
       <a class="link link-hover" href="/pricing">Pricing</a>
-      <a class="link link-hover" href="/blog">Blog</a>
+      <!-- <a class="link link-hover" href="/blog">Blog</a> -->
       <a class="link link-hover" href="/contact_us">Contact Us</a>
       <a
         class="link link-hover flex items-center"
@@ -100,7 +100,7 @@
       </a>
     </nav>
     <aside>
-      <p>Copyright © 2024 - All right reserved by Deal Dynamo</p>
+      <p>Copyright © 2024 - All rights reserved by Deal Dynamo</p>
     </aside>
   </footer>
 </div>

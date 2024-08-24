@@ -1,7 +1,7 @@
 export const WebsiteName: string = "Deal Dynamo"
 export const WebsiteBaseUrl: string = "https://deal-dynamo.vercel.app/"
 export const WebsiteDescription: string =
-  "Open source, fast, and free to host SaaS template. Built with SvelteKit, Supabase, Stripe, Tailwind, DaisyUI, and Postgres"
+  "Automate your Amazon deals to your Facebook page or group."
 export const ToolTipMessages = {
     minimum_savings_threshold: "Minimum savings percentage for a deal to be considered for posting.",
     cleanup_days_threshold: "Number of days after which deals are removed from products you have already posted.",
