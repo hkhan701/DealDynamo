@@ -4,7 +4,13 @@
 
 <div class="navbar bg-base-100 container mx-auto">
   <div class="flex-1">
-    <a class="btn btn-ghost large-case text-xl" href="/">Deal Dynamo</a>
+    <a class="btn btn-ghost large-case text-xl" href="/"
+      ><div
+        class="text-xl md:text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent mt-1 md:mb-8"
+      >
+        Deal Dynamo
+      </div></a
+    >
   </div>
   <div class="flex-none">
     <ul class="menu menu-horizontal px-1 hidden sm:flex font-bold text-lg">
@@ -17,7 +23,7 @@
       <li class="md:mx-2"><a href="/account">Account</a></li>
       <li class="md:mx-2"><a href="/pricing">Pricing</a></li>
       <li class="md:mx-2"><a href="/contact_us">Contact Us</a></li>
-      <li class="md:mx-2"><a href="/blog">Blog</a></li>
+      <!-- <li class="md:mx-2"><a href="/blog">Blog</a></li> -->
     </ul>
     <div class="dropdown dropdown-end sm:hidden">
       <!-- svelte-ignore a11y-label-has-associated-control -->
@@ -45,7 +51,7 @@
         <li><a href="/account">Account</a></li>
         <li><a href="/pricing">Pricing</a></li>
         <li class="md:mx-2"><a href="/contact_us">Contact Us</a></li>
-        <li><a href="/blog">Blog</a></li>
+        <!-- <li><a href="/blog">Blog</a></li> -->
 
         <!-- <li>
           <a

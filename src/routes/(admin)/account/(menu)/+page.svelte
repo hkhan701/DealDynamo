@@ -272,6 +272,7 @@
           class="input input-bordered w-full"
           bind:value={config.associate_tag}
           name="associateTag"
+          placeholder="Enter your Amazon associate tag"
         />
       </div>
     </div>
@@ -314,7 +315,7 @@
           </div>
         </div>
         <div>
-          <label for="end-time" class="block mb-2 text-sm font-medium"
+          <label for="end-time" class="block mt-2 mb-2 text-sm font-medium"
             >End time:</label
           >
           <div class="relative">
@@ -361,6 +362,7 @@
           bind:value={config.fb_page_id}
           name="fbPageId"
           id="fb_page_id"
+          placeholder="Enter your Facebook page ID"
         />
       </div>
       <div class="form-group">
@@ -373,6 +375,7 @@
           bind:value={config.access_token}
           name="accessToken"
           id="access_token"
+          placeholder="Enter your access token"
         />
       </div>
     </div>
@@ -390,6 +393,7 @@
           bind:value={config.fb_group_link}
           name="fbGroupLink"
           id="fb_group_link"
+          placeholder="Enter your Facebook group link"
         />
       </div>
     </div>
