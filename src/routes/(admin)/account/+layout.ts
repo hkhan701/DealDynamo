@@ -23,6 +23,9 @@ export const load = async ({ fetch, data, depends, url }) => {
   const profile: Database["public"]["Tables"]["profiles"]["Row"] | null =
     data.profile
 
+  const userSettings: Database["public"]["Tables"]["user_settings"]["Row"] | null =
+    data.userSettings
+
   const createProfilePath = "/account/create_profile"
   if (
     profile &&
@@ -32,7 +35,7 @@ export const load = async ({ fetch, data, depends, url }) => {
     throw redirect(303, createProfilePath)
   }
 
-  return { supabase, session, profile }
+  return { supabase, session, profile, userSettings }
 }
 
 export const _hasFullProfile = (

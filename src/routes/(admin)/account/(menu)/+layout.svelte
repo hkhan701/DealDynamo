@@ -85,7 +85,7 @@
           Home
         </a>
       </li>
-      <li>
+      <!-- <li>
         <a
           href="/account/billing"
           class={adminSection === "billing" ? "active" : ""}
@@ -103,7 +103,8 @@
           </svg>
           Billing
         </a>
-      </li>
+      </li> -->
+
       <li>
         <a
           href="/account/settings"

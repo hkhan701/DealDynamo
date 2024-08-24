@@ -1,3 +1,28 @@
+-- Create a table for user-specific settings
+create table
+  public.user_settings (
+    user_id uuid not null,
+    minimum_savings_threshold integer null default 30,
+    cleanup_days_threshold integer null default 5,
+    maximum_posts_per_session integer null default 15,
+    delay_between_posts integer null default 300,
+    delay_between_sessions integer null default 3600,
+    recently_updated_hour_threshold integer null default 5,
+    special_message_threshold integer null default 70,
+    random_image_toggle boolean null default false,
+    associate_tag text null,
+    start_time time without time zone null,
+    end_time time without time zone null,
+    fb_group_link text null,
+    fb_page_id text null,
+    logins jsonb null,
+    access_token text null,
+    updated_at timestamp with time zone null default now(),
+    running_status boolean null default false,
+    constraint user_settings_pkey primary key (user_id),
+    constraint user_settings_user_id_fkey foreign key (user_id) references auth.users (id) on delete cascade
+  ) tablespace pg_default;
+
 -- Create a table for public profiles
 create table profiles (
   id uuid references auth.users on delete cascade not null primary key,
@@ -38,7 +63,6 @@ create table contact_requests (
   last_name text,
   email text,
   phone text,
-  -- company_name text,
   message_body text
 );
 alter table contact_requests enable row level security;
@@ -49,22 +73,15 @@ create function public.handle_new_user()
 returns trigger as $$
 begin
   insert into public.profiles (id, full_name, avatar_url)
-  values (new.id, new.raw_user_meta_data->>'full_name', new.raw_user_meta_data->>'avatar_url');
+  values (new.id, new.raw_user_meta_data->>'full_name', new.raw_user_meta_data->>'avatar_url');\
+    -- Insert default settings data
+  insert into public.user_settings (user_id)
+  values (new.id);
   return new;
+
+
 end;
 $$ language plpgsql security definer;
 create trigger on_auth_user_created
   after insert on auth.users
   for each row execute procedure public.handle_new_user();
-
--- Set up Storage!
-insert into storage.buckets (id, name)
-  values ('avatars', 'avatars');
-
--- Set up access controls for storage.
--- See https://supabase.com/docs/guides/storage#policy-examples for more details.
-create policy "Avatar images are publicly accessible." on storage.objects
-  for select using (bucket_id = 'avatars');
-
-create policy "Anyone can upload an avatar." on storage.objects
-  for insert with check (bucket_id = 'avatars');

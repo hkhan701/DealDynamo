@@ -10,11 +10,18 @@ export const load: LayoutServerLoad = async ({
     throw redirect(303, "/login")
   }
 
-  const { data: profile } = await supabase
-    .from("profiles")
-    .select(`*`)
-    .eq("id", session.user.id)
-    .single()
+  const [{ data: profile }, { data: userSettings }] = await Promise.all([
+    supabase
+      .from("profiles")
+      .select(`*`)
+      .eq("id", session.user.id)
+      .single(),
+    supabase
+      .from("user_settings")
+      .select(`*`)
+      .eq("user_id", session.user.id)
+      .single()
+  ])
 
-  return { session, profile }
+  return { session, profile, userSettings }
 }

@@ -67,6 +67,76 @@ export interface Database {
           },
         ]
       }
+      user_settings: {
+        Row: {
+          user_id: string
+          running_status: boolean
+          minimum_savings_threshold: number
+          cleanup_days_threshold: number
+          maximum_posts_per_session: number
+          delay_between_posts: number
+          delay_between_sessions: number
+          recently_updated_hour_threshold: number
+          special_message_threshold: number
+          random_image_toggle: boolean
+          associate_tag: string
+          start_time: string
+          end_time: string
+          fb_group_link: string
+          fb_page_id: string
+          logins: Json
+          access_token: string
+          updated_at: Date | null
+        }
+        Insert: {
+          user_id: string
+          running_status?: boolean
+          minimum_savings_threshold?: number
+          cleanup_days_threshold?: number
+          maximum_posts_per_session?: number
+          delay_between_posts?: number
+          delay_between_sessions?: number
+          recently_updated_hour_threshold?: number
+          special_message_threshold?: number
+          random_image_toggle?: boolean
+          associate_tag?: string
+          start_time?: string
+          end_time?: string
+          fb_group_link?: string
+          fb_page_id?: string
+          logins?: Json
+          access_token?: string
+          updated_at?: Date | null
+        }
+        Update: {
+          user_id?: string
+          running_status?: boolean
+          minimum_savings_threshold?: number
+          cleanup_days_threshold?: number
+          maximum_posts_per_session?: number
+          delay_between_posts?: number
+          delay_between_sessions?: number
+          recently_updated_hour_threshold?: number
+          special_message_threshold?: number
+          random_image_toggle?: boolean
+          associate_tag?: string
+          start_time?: string
+          end_time?: string
+          fb_group_link?: string
+          fb_page_id?: string
+          logins?: Json
+          access_token?: string
+          updated_at?: Date | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_settings_user_id_fkey"
+            columns: ["user_id"]
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never

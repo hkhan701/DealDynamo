@@ -1,6 +1,144 @@
 import { fail, redirect } from "@sveltejs/kit"
 
 export const actions = {
+  updateUserSettings: async ({ request, locals: { supabase, safeGetSession } }) => {
+    const { session } = await safeGetSession()
+    if (!session) {
+      throw redirect(303, "/login")
+    }
+  
+    const formData = await request.formData()
+    console.log(formData)
+    const runningStatus = formData.get("runningStatus") === "on"
+    const minimumSavingsThreshold = parseInt(formData.get("minimumSavingsThreshold") as string, 10) || 0
+    const cleanupDaysThreshold = parseInt(formData.get("cleanupDaysThreshold") as string, 10) || 0
+    const maximumPostsPerSession = parseInt(formData.get("maximumPostsPerSession") as string, 10) || 0
+    const delayBetweenPosts = parseInt(formData.get("delayBetweenPosts") as string, 10) || 0
+    const delayBetweenSessions = parseInt(formData.get("delayBetweenSessions") as string, 10) || 0
+    const recentlyUpdatedHourThreshold = parseInt(formData.get("recentlyUpdatedHourThreshold") as string, 10) || 0
+    const specialMessageThreshold = parseInt(formData.get("specialMessageThreshold") as string, 10) || 0
+    const randomImageToggle = formData.get("randomImageToggle") === "on"
+    const associateTag = formData.get("associateTag") as string
+    const startTime = formData.get("startTime") as string
+    const endTime = formData.get("endTime") as string
+    const fbGroupLink = formData.get("fbGroupLink") as string
+    const fbPageId = formData.get("fbPageId") as string
+    const accessToken = formData.get("accessToken") as string
+    
+    // Parse logins
+    const logins = [
+      { email: formData.get("logins[0].email") as string, password: formData.get("logins[0].password") as string },
+      { email: formData.get("logins[1].email") as string, password: formData.get("logins[1].password") as string },
+      { email: formData.get("logins[2].email") as string, password: formData.get("logins[2].password") as string },
+    ]
+
+        // Validation
+      const errors = []
+
+      if (minimumSavingsThreshold <= 0) {
+        errors.push("Minimum savings threshold must be a positive number")
+      }
+  
+      if (cleanupDaysThreshold <= 0) {
+        errors.push("Clean up days threshold must be a positive number")
+      }
+  
+      if (maximumPostsPerSession <= 0) {
+        errors.push("Maximum posts per session must be a positive number")
+      }
+  
+      if (delayBetweenPosts <= 60 || delayBetweenPosts <= 0) {
+        errors.push("Delay between posts must be above 60 seconds and a positive number")
+      }
+  
+      if (delayBetweenSessions <= 60 || delayBetweenSessions <= 0) {
+        errors.push("Delay between sessions must be above 60 seconds and a positive number")
+      }
+  
+      if (recentlyUpdatedHourThreshold < 1) {
+        errors.push("Recently updated hour threshold must be a positive number at least 1")
+      }
+  
+      if (specialMessageThreshold <= 0 || specialMessageThreshold <= minimumSavingsThreshold) {
+        errors.push("Special message threshold must be a positive number and greater than minimum savings threshold")
+      }
+  
+      // Parse start and end times
+      const startDateTime = new Date(`1970-01-01T${startTime}:00`)
+      const endDateTime = new Date(`1970-01-01T${endTime}:00`)
+  
+      if (startDateTime >= endDateTime) {
+        errors.push("Start time must be before end time")
+      }
+
+          // Facebook Group/Page validation
+
+      let hasValidLogin = false;
+
+      for (const login of logins) {
+        if (login.email && login.password) {
+          hasValidLogin = true;
+          break;
+        }
+      }
+
+      if (!(fbPageId && accessToken) && !(fbGroupLink && hasValidLogin)) {
+        errors.push("Please provide either a FB page ID with an access token or FB group link with at least one login.");
+      }
+  
+      if (errors.length > 0) {
+        return fail(400, {
+          errorMessage: errors.join(". "),
+          // You might want to return the form data here so the user doesn't lose their input
+        })
+      }
+  
+    const { error } = await supabase.from("user_settings").upsert({
+      user_id: session.user.id,
+      running_status: runningStatus,
+      minimum_savings_threshold: minimumSavingsThreshold,
+      cleanup_days_threshold: cleanupDaysThreshold,
+      maximum_posts_per_session: maximumPostsPerSession,
+      delay_between_posts: delayBetweenPosts,
+      delay_between_sessions: delayBetweenSessions,
+      recently_updated_hour_threshold: recentlyUpdatedHourThreshold,
+      special_message_threshold: specialMessageThreshold,
+      random_image_toggle: randomImageToggle,
+      associate_tag: associateTag,
+      start_time: startTime,
+      end_time: endTime,
+      fb_group_link: fbGroupLink,
+      fb_page_id: fbPageId,
+      logins: logins.length > 0 ? logins : null,
+      access_token: accessToken,
+      updated_at: new Date(),
+    })
+  
+    if (error) {
+      return fail(500, {
+        errorMessage: "Unknown error. If this persists please contact us.",
+      })
+    }
+  
+    return {
+      runningStatus,
+      minimumSavingsThreshold,
+      cleanupDaysThreshold,
+      maximumPostsPerSession,
+      delayBetweenPosts,
+      delayBetweenSessions,
+      recentlyUpdatedHourThreshold,
+      specialMessageThreshold,
+      randomImageToggle,
+      associateTag,
+      startTime,
+      endTime,
+      fbGroupLink,
+      fbPageId,
+      logins,
+      accessToken,
+    }
+  },
   updateEmail: async ({ request, locals: { supabase, safeGetSession } }) => {
     const { session } = await safeGetSession()
     if (!session) {

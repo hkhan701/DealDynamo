@@ -77,9 +77,7 @@
     ]}
   />
 {:else}
-  <div
-    class="card p-6 pb-7 mt-8 max-w-xl flex flex-col md:flex-row shadow max-w-md"
-  >
+  <div class="card p-6 pb-7 mt-8 flex flex-col md:flex-row shadow max-w-md">
     <div class="flex flex-col gap-y-4">
       {#if usingOAuth}
         <div class="font-bold">Set Password By Email</div>

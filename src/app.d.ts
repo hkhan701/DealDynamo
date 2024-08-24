@@ -12,6 +12,8 @@ declare global {
     }
     interface PageData {
       session: Session | null
+      profile: Database["public"]["Tables"]["profiles"]["Row"] | null
+      userSettings: Database["public"]["Tables"]["user_settings"]["Row"] | null
     }
     // interface Error {}
     // interface Platform {}
@@ -19,3 +21,4 @@ declare global {
 }
 
 export {}
+

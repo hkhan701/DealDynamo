@@ -1,88 +1,466 @@
 <script lang="ts">
+  import { onMount } from "svelte"
   import { getContext } from "svelte"
+  import { enhance, applyAction } from "$app/forms"
+  import { page } from "$app/stores"
   import type { Writable } from "svelte/store"
+  import type { SubmitFunction } from "@sveltejs/kit"
 
+  export let data
+  let { userSettings } = data
+
+  // Define the admin section context
   let adminSection: Writable<string> = getContext("adminSection")
   adminSection.set("home")
+
+  // Define the configuration settings
+  let config = {
+    running_status: false,
+    minimum_savings_threshold: 0,
+    cleanup_days_threshold: 0,
+    maximum_posts_per_session: 0,
+    delay_between_posts: 0,
+    delay_between_sessions: 0,
+    recently_updated_hour_threshold: 0,
+    special_message_threshold: 0,
+    random_image_toggle: false,
+    associate_tag: "",
+    start_time: "",
+    end_time: "",
+    fb_group_link: "",
+    fb_page_id: "",
+    logins: [
+      { email: "", password: "" },
+      { email: "", password: "" },
+      { email: "", password: "" },
+    ],
+    access_token: "",
+  }
+
+  let initialConfig = JSON.parse(JSON.stringify(config))
+
+  onMount(() => {
+    if (userSettings) {
+      config.running_status = userSettings.running_status || false
+      config.minimum_savings_threshold =
+        userSettings.minimum_savings_threshold || 0
+      config.cleanup_days_threshold = userSettings.cleanup_days_threshold || 0
+      config.maximum_posts_per_session =
+        userSettings.maximum_posts_per_session || 0
+      config.delay_between_posts = userSettings.delay_between_posts || 0
+      config.delay_between_sessions = userSettings.delay_between_sessions || 0
+      config.recently_updated_hour_threshold =
+        userSettings.recently_updated_hour_threshold || 0
+      config.special_message_threshold =
+        userSettings.special_message_threshold || 0
+      config.random_image_toggle = userSettings.random_image_toggle || false
+      config.associate_tag = userSettings.associate_tag || ""
+      config.start_time = userSettings.start_time || ""
+      config.end_time = userSettings.end_time || ""
+      config.fb_group_link = userSettings.fb_group_link || ""
+      config.fb_page_id = userSettings.fb_page_id || ""
+      config.logins =
+        typeof userSettings.logins === "string"
+          ? JSON.parse(userSettings.logins)
+          : userSettings.logins || [
+              { email: "", password: "" },
+              { email: "", password: "" },
+              { email: "", password: "" },
+            ]
+      config.access_token = userSettings.access_token || ""
+
+      initialConfig = JSON.parse(JSON.stringify(config))
+    }
+  })
+
+  let loading = false
+  let showPopup = false
+
+  // Handle form submission
+  const handleSubmit: SubmitFunction = () => {
+    loading = true
+    return async ({ update, result }) => {
+      await update({ reset: false })
+      await applyAction(result)
+      loading = false
+      if (result.type === "success") {
+        initialConfig = { ...config } // Reset the initial config
+        showPopup = true
+        setTimeout(() => {
+          showPopup = false
+        }, 3000) // Hide the popup after 3 seconds
+      }
+    }
+  }
+
+  // Reactive statement to check if there are changes
+  $: hasChanges = JSON.stringify(config) !== JSON.stringify(initialConfig)
 </script>
 
 <svelte:head>
   <title>Account</title>
 </svelte:head>
 
-<h1 class="text-2xl font-bold mb-1">Dashboard</h1>
-<div class="alert alert-error max-w-lg mt-2">
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    class="stroke-current shrink-0 h-6 w-6"
-    fill="none"
-    viewBox="0 0 24 24"
-    ><path
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      stroke-width="2"
-      d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
-    /></svg
+<div class="container mx-auto p-4">
+  <h1 class="text-2xl font-bold mb-6">Configuration Settings</h1>
+
+  <form
+    method="POST"
+    action="/account/api?/updateUserSettings"
+    use:enhance={handleSubmit}
   >
-  <div>
-    <div class="font-bold">Demo Content</div>
-    <div class="my-2">
-      This page is just a placeholder. Replace this page with your app's content
-      and functionality.
-    </div>
-    <div class="my-2">
-      The <a href="/account/billing" class="link">billing</a> and
-      <a href="/account/settings" class="link">settings</a> pages are functional
-      demos.
-    </div>
-  </div>
-</div>
+    <button
+      type="submit"
+      class="ml-auto btn btn-sm mt-3 min-w-[145px] btn-success"
+      disabled={loading || !hasChanges}
+    >
+      {#if loading}
+        <span class="loading loading-spinner loading-md align-middle mx-3"
+        ></span>
+      {:else}
+        Save Changes
+      {/if}
+    </button>
 
-<div class="my-6">
-  <h1 class="text-xl font-bold mb-1">Users</h1>
-  <div class="stats shadow stats-vertical sm:stats-horizontal sm:w-[420px]">
-    <div class="stat place-items-center">
-      <div class="stat-title">Downloads</div>
-      <div class="stat-value">31K</div>
-      <div class="stat-desc">↗︎ 546 (2%)</div>
-    </div>
-
-    <div class="stat place-items-center">
-      <div class="stat-title">Users</div>
-      <div class="stat-value text-secondary">4,200</div>
-      <div class="stat-desc">↗︎ 40 (2%)</div>
-    </div>
-  </div>
-</div>
-<div class="my-6">
-  <h1 class="text-xl font-bold mb-1">Accounts</h1>
-  <div class="stats shadow stats-vertical sm:stats-horizontal sm:w-[420px]">
-    <div class="stat place-items-center">
-      <div class="stat-title">New Registers</div>
-      <div class="stat-value">1,200</div>
-      <div class="stat-desc">↘︎ 90 (14%)</div>
+    <div class="form-section mb-6">
+      <h2 class="text-xl font-semibold">Running Status</h2>
+      <div class="form-group">
+        <label class="label" for="running_status"
+          ><span class="label-text"
+            >Please ensure all configurations are correct before enabling and
+            saving changes. This will enable the posting process.</span
+          ></label
+        >
+        <input
+          type="checkbox"
+          class="toggle toggle-success"
+          bind:checked={config.running_status}
+          name="runningStatus"
+          id="running_status"
+        />
+      </div>
     </div>
 
-    <div class="stat place-items-center">
-      <div class="stat-title">Churned Accounts</div>
-      <div class="stat-value">42</div>
-      <div class="stat-desc">↘︎ 6 (12%)</div>
-    </div>
-  </div>
-</div>
-<div class="my-6">
-  <h1 class="text-xl font-bold mb-1">Revenue</h1>
-  <div class="stats shadow stats-vertical sm:stats-horizontal sm:w-[420px]">
-    <div class="stat place-items-center">
-      <div class="stat-title text-success">Revenue</div>
-      <div class="stat-value text-success">$4200</div>
-      <div class="stat-desc">↗︎ $180 (4%)</div>
+    <!-- Thresholds Section -->
+    <div class="form-section grid grid-cols-1 md:grid-cols-2 gap-4 mb-6 mt-6">
+      <h2 class="col-span-1 md:col-span-2 text-xl font-semibold">Thresholds</h2>
+
+      <div class="form-group">
+        <label class="label" for="minimum-savings-threshold">
+          <span class="label-text">Minimum Savings Threshold</span>
+        </label>
+        <input
+          type="number"
+          class="input input-bordered w-full"
+          bind:value={config.minimum_savings_threshold}
+          name="minimumSavingsThreshold"
+          id="minimum-savings-threshold"
+        />
+      </div>
+
+      <div class="form-group">
+        <label class="label" for="cleanup-days-threshold">
+          <span class="label-text">Cleanup Days Threshold</span>
+        </label>
+        <input
+          type="number"
+          class="input input-bordered w-full"
+          bind:value={config.cleanup_days_threshold}
+          name="cleanupDaysThreshold"
+          id="cleanup-days-threshold"
+        />
+      </div>
+
+      <div class="form-group">
+        <label class="label" for="maximum-posts-per-session">
+          <span class="label-text">Maximum Posts Per Session</span>
+        </label>
+        <input
+          type="number"
+          class="input input-bordered w-full"
+          bind:value={config.maximum_posts_per_session}
+          name="maximumPostsPerSession"
+          id="maximum-posts-per-session"
+        />
+      </div>
+
+      <div class="form-group">
+        <label class="label" for="delay-between-posts">
+          <span class="label-text">Delay Between Posts (seconds)</span>
+        </label>
+        <input
+          type="number"
+          class="input input-bordered w-full"
+          bind:value={config.delay_between_posts}
+          name="delayBetweenPosts"
+          id="delay-between-posts"
+        />
+      </div>
+
+      <div class="form-group">
+        <label class="label" for="delay-between-sessions">
+          <span class="label-text">Delay Between Sessions (seconds)</span>
+        </label>
+        <input
+          type="number"
+          class="input input-bordered w-full"
+          bind:value={config.delay_between_sessions}
+          name="delayBetweenSessions"
+          id="delay-between-sessions"
+        />
+      </div>
+
+      <div class="form-group">
+        <label class="label" for="recently-updated-hour-threshold">
+          <span class="label-text">Recently Updated Hour Threshold</span>
+        </label>
+        <input
+          type="number"
+          class="input input-bordered w-full"
+          bind:value={config.recently_updated_hour_threshold}
+          name="recentlyUpdatedHourThreshold"
+          id="recently-updated-hour-threshold"
+        />
+      </div>
+
+      <div class="form-group">
+        <label class="label" for="special-message-threshold">
+          <span class="label-text">Special Message Threshold</span>
+        </label>
+        <input
+          type="number"
+          class="input input-bordered w-full"
+          bind:value={config.special_message_threshold}
+          name="specialMessageThreshold"
+          id="special-message-threshold"
+        />
+      </div>
     </div>
 
-    <div class="stat place-items-center">
-      <div class="stat-title">New Subscribers</div>
-      <div class="stat-value">16</div>
-      <div class="stat-desc">↘︎ 1 (%7)</div>
+    <!-- Toggles -->
+    <div class="form-section mb-6">
+      <h2 class="text-xl font-semibold">Toggles</h2>
+      <div class="form-group">
+        <label class="label" for="random_image_toggle"
+          ><span class="label-text">Random Image Toggle</span></label
+        >
+        <input
+          type="checkbox"
+          class="toggle toggle-success"
+          bind:checked={config.random_image_toggle}
+          name="randomImageToggle"
+          id="random_image_toggle"
+        />
+      </div>
     </div>
-  </div>
+
+    <!-- Amazon Affiliate Settings -->
+    <div class="form-section mb-6">
+      <h2 class="text-xl font-semibold">Amazon Affiliate Settings</h2>
+      <div class="form-group">
+        <label class="label" for="associate_tag"
+          ><span class="label-text">Associate Tag</span></label
+        >
+        <input
+          type="text"
+          class="input input-bordered w-full"
+          bind:value={config.associate_tag}
+          name="associateTag"
+        />
+      </div>
+    </div>
+
+    <!-- Posting Schedule -->
+    <div class="form-section mb-6">
+      <h2 class="text-xl font-semibold">Posting Schedule</h2>
+      <p class="text-gray-600 mb-4">Note: This is based off CDT Timezone</p>
+      <div class="form-group max-w-[16rem]">
+        <div>
+          <label for="start-time" class="block mb-2 text-sm font-medium"
+            >Start time:</label
+          >
+          <div class="relative">
+            <div
+              class="absolute inset-y-0 end-0 top-0 flex items-center pe-3.5 pointer-events-none"
+            >
+              <svg
+                class="w-4 h-4 text-gray-500 dark:text-gray-400"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10S2 17.523 2 12Zm11-4a1 1 0 1 0-2 0v4a1 1 0 0 0 .293.707l3 3a1 1 0 0 0 1.414-1.414L13 11.586V8Z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+            </div>
+            <input
+              type="time"
+              id="start-time"
+              class="bg-gray-50 border leading-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500"
+              bind:value={config.start_time}
+              name="startTime"
+              required
+            />
+          </div>
+        </div>
+        <div>
+          <label for="end-time" class="block mb-2 text-sm font-medium"
+            >End time:</label
+          >
+          <div class="relative">
+            <div
+              class="absolute inset-y-0 end-0 top-0 flex items-center pe-3.5 pointer-events-none"
+            >
+              <svg
+                class="w-4 h-4 text-gray-500 dark:text-gray-400"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10S2 17.523 2 12Zm11-4a1 1 0 1 0-2 0v4a1 1 0 0 0 .293.707l3 3a1 1 0 0 0 1.414-1.414L13 11.586V8Z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+            </div>
+            <input
+              type="time"
+              id="end-time"
+              class="bg-gray-50 border leading-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500"
+              bind:value={config.end_time}
+              name="endTime"
+              required
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Facebook Page Integration Section -->
+    <div class="form-section mb-6">
+      <h2 class="text-xl font-semibold">Facebook Page Integration</h2>
+      <div class="form-group">
+        <label class="label" for="fb_page_id"
+          ><span class="label-text">Facebook Page ID</span></label
+        >
+        <input
+          type="text"
+          class="input input-bordered w-full"
+          bind:value={config.fb_page_id}
+          name="fbPageId"
+          id="fb_page_id"
+        />
+      </div>
+      <div class="form-group">
+        <label class="label" for="access_token">
+          <span class="label-text">Access Token</span></label
+        >
+        <input
+          type="text"
+          class="input input-bordered w-full"
+          bind:value={config.access_token}
+          name="accessToken"
+          id="access_token"
+        />
+      </div>
+    </div>
+
+    <!-- Facebook Group Integration Section -->
+    <div class="form-section mb-6">
+      <h2 class="text-xl font-semibold">Facebook Group Integration</h2>
+      <div class="form-group">
+        <label class="label" for="fb_group_link"
+          ><span class="label-text">Facebook Group Link</span></label
+        >
+        <input
+          type="text"
+          class="input input-bordered w-full"
+          bind:value={config.fb_group_link}
+          name="fbGroupLink"
+          id="fb_group_link"
+        />
+      </div>
+    </div>
+
+    <!-- Facebook Logins Section -->
+    <div class="form-section mb-6">
+      <h2 class="text-xl font-semibold">Facebook Logins</h2>
+      <p class="text-gray-600 mb-4">
+        Enter your Facebook login details below. These will be used randomly to
+        post in your Facebook group. You can add up to 3 logins.
+      </p>
+      <div class="alert alert-error max-w-lg mt-2">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="stroke-current shrink-0 h-6 w-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          ><path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+          /></svg
+        >
+        <div>
+          <div class="font-bold">Important</div>
+          <div class="my-2">
+            Please ensure that the provided logins have Two-Factor
+            Authentication (2FA) disabled for proper functionality.
+          </div>
+        </div>
+      </div>
+      {#each config.logins as login, index}
+        <div class="mb-4">
+          <h3 class="text-lg font-semibold">Login {index + 1}</h3>
+          <div class="form-group">
+            <label class="label" for="email">
+              <!-- <span class="label-text">Email</span> -->
+            </label>
+            <input
+              type="email"
+              class="input input-bordered w-full"
+              bind:value={login.email}
+              name={`logins[${index}].email`}
+              placeholder="Enter your email"
+            />
+          </div>
+          <div class="form-group">
+            <label class="label" for="password">
+              <!-- <span class="label-text">Password</span> -->
+            </label>
+            <input
+              type="password"
+              class="input input-bordered w-full"
+              bind:value={login.password}
+              name={`logins[${index}].password`}
+              placeholder="Enter your password"
+            />
+          </div>
+        </div>
+      {/each}
+    </div>
+
+    {#if $page?.form?.errorMessage}
+      <div class="toast toast-top">
+        <div class="alert alert-error text-wrap self-end">
+          <span>{$page?.form?.errorMessage}</span>
+        </div>
+      </div>
+    {/if}
+
+    {#if showPopup}
+      <div class="toast toast-top">
+        <div class="alert alert-success">
+          <span>Changes saved successfully!</span>
+        </div>
+      </div>
+    {/if}
+  </form>
 </div>
