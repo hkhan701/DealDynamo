@@ -37,7 +37,7 @@
     access_token: "",
   }
 
-  let initialConfig = JSON.parse(JSON.stringify(config))
+  let initialConfig = JSON.parse(JSON.stringify(config)) // Store the initial config
 
   onMount(() => {
     if (userSettings) {
@@ -69,7 +69,7 @@
             ]
       config.access_token = userSettings.access_token || ""
 
-      initialConfig = JSON.parse(JSON.stringify(config))
+      initialConfig = JSON.parse(JSON.stringify(config)) // Store the initial config
     }
   })
 
@@ -109,6 +109,7 @@
     action="/account/api?/updateUserSettings"
     use:enhance={handleSubmit}
   >
+    <!-- Button is disabled if there are no changes -->
     <button
       type="submit"
       class="ml-auto btn btn-sm mt-3 min-w-[145px] btn-success"
@@ -122,15 +123,20 @@
       {/if}
     </button>
 
-    <div class="form-section mb-6">
+    <!-- Running Status Section -->
+    <div class="form-section mb-6 mt-6">
       <h2 class="text-xl font-semibold">Running Status</h2>
       <div class="form-group">
-        <label class="label" for="running_status"
-          ><span class="label-text"
-            >Please ensure all configurations are correct before enabling and
-            saving changes. This will enable the posting process.</span
-          ></label
-        >
+        <span class="label-text"
+          >After pressing "Run", wait for 5 minutes. Refresh to see if you see
+          any posted deals on your Facebook group or page. If you refresh the
+          page and notice the running status turns off, an error occurred.
+          Please double-check your config information, or if the issue persists, <a
+            href="/contact_us"
+            class="link">contact support</a
+          >.
+        </span>
+        <label class="label" for="running_status"> </label>
         <input
           type="checkbox"
           class="toggle toggle-success"
@@ -390,12 +396,12 @@
 
     <!-- Facebook Logins Section -->
     <div class="form-section mb-6">
-      <h2 class="text-xl font-semibold">Facebook Logins</h2>
       <p class="text-gray-600 mb-4">
         Enter your Facebook login details below. These will be used randomly to
         post in your Facebook group. You can add up to 3 logins.
       </p>
-      <div class="alert alert-error max-w-lg mt-2">
+
+      <div class="alert alert-error max-w-lg mt-2 mb-2">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           class="stroke-current shrink-0 h-6 w-6"
@@ -416,6 +422,7 @@
           </div>
         </div>
       </div>
+
       {#each config.logins as login, index}
         <div class="mb-4">
           <h3 class="text-lg font-semibold">Login {index + 1}</h3>
@@ -458,6 +465,19 @@
     {#if showPopup}
       <div class="toast toast-top">
         <div class="alert alert-success">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6 shrink-0 stroke-current"
+            fill="none"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+            />
+          </svg>
           <span>Changes saved successfully!</span>
         </div>
       </div>
