@@ -8,7 +8,6 @@ export const actions = {
     }
   
     const formData = await request.formData()
-    console.log(formData)
     const runningStatus = formData.get("runningStatus") === "on"
     const minimumSavingsThreshold = parseInt(formData.get("minimumSavingsThreshold") as string, 10) || 0
     const cleanupDaysThreshold = parseInt(formData.get("cleanupDaysThreshold") as string, 10) || 0
@@ -317,7 +316,6 @@ export const actions = {
 
     const { error } = await supabaseServiceRole.auth.admin.deleteUser(
       session.user.id,
-      true,
     )
     if (error) {
       return fail(500, {
