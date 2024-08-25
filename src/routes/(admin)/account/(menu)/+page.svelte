@@ -37,7 +37,7 @@
     access_token: "",
   }
 
-  let initialConfig = JSON.parse(JSON.stringify(config)) // Store the initial config
+  let initialConfig = JSON.parse(JSON.stringify(config)) // Store the initial
 
   onMount(() => {
     if (userSettings) {
@@ -109,10 +109,43 @@
     action="/account/api?/updateUserSettings"
     use:enhance={handleSubmit}
   >
-    <!-- Button is disabled if there are no changes -->
+    <!-- Running Status Section -->
+    <div
+      class="form-section mb-6 mt-6 p-6 border-2 border-primary rounded-lg bg-primary/10"
+    >
+      <h2 class="text-2xl font-bold text-primary mb-4 flex items-center">
+        Running Status
+      </h2>
+      <div class="form-group">
+        <p class="label-text text-lg mb-4">
+          This is the main toggle to run and enable the automated posting. After
+          toggling on and pressing save, wait for 5 minutes. Refresh to see if
+          any deals are posted on your Facebook group or page. If you refresh
+          and notice the running status turns off, an may have error occurred.
+          Please double-check your configuration or <a
+            href="/contact_us"
+            class="link text-primary font-semibold">contact support</a
+          >.
+        </p>
+        <div class="flex items-center">
+          <label class="label text-lg font-semibold mr-4" for="running_status"
+            >Running Status:</label
+          >
+          <input
+            type="checkbox"
+            class="toggle toggle-success toggle-lg"
+            bind:checked={config.running_status}
+            name="runningStatus"
+            id="running_status"
+          />
+        </div>
+      </div>
+    </div>
+
+    <!-- Save Button is disabled if there are no changes -->
     <button
       type="submit"
-      class="ml-auto btn btn-sm mt-3 min-w-[145px] btn-success"
+      class="ml-auto btn btn-lg mt-3 px-8 py-3 min-w-[180px] btn-success font-bold shadow-lg hover:shadow-2xl transition-all duration-200 ease-in-out"
       disabled={loading || !hasChanges}
     >
       {#if loading}
@@ -123,32 +156,10 @@
       {/if}
     </button>
 
-    <!-- Running Status Section -->
-    <div class="form-section mb-6 mt-6">
-      <h2 class="text-xl font-semibold">Running Status</h2>
-      <div class="form-group">
-        <span class="label-text"
-          >After pressing "Run", wait for 5 minutes. Refresh to see if you see
-          any posted deals on your Facebook group or page. If you refresh the
-          page and notice the running status turns off, an error occurred.
-          Please double-check your config information, or if the issue persists, <a
-            href="/contact_us"
-            class="link">contact support</a
-          >.
-        </span>
-        <label class="label" for="running_status"> </label>
-        <input
-          type="checkbox"
-          class="toggle toggle-success"
-          bind:checked={config.running_status}
-          name="runningStatus"
-          id="running_status"
-        />
-      </div>
-    </div>
-
     <!-- Thresholds Section -->
-    <div class="form-section grid grid-cols-1 md:grid-cols-2 gap-4 mb-6 mt-6">
+    <div
+      class="tab-content form-section grid grid-cols-1 md:grid-cols-2 gap-4 mb-6 mt-6"
+    >
       <h2 class="col-span-1 md:col-span-2 text-xl font-semibold">Thresholds</h2>
 
       <div class="form-group">
@@ -402,7 +413,9 @@
     <div class="form-section mb-6">
       <p class="text-gray-600 mb-4">
         Enter your Facebook login details below. These will be used randomly to
-        post in your Facebook group. You can add up to 3 logins.
+        post in your Facebook group. You can add up to 3 logins. Please ensure
+        that they are members of your Facebook group, and that they have posting
+        privileges.
       </p>
 
       <div class="alert alert-error max-w-lg mt-2 mb-2">

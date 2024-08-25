@@ -23,7 +23,12 @@
   <div class="drawer-content">
     <div class="navbar bg-base-100 lg:hidden">
       <div class="flex-1">
-        <a class="btn btn-ghost normal-case text-xl" href="/">Deal Dynamo</a>
+        <a
+          class="btn btn-ghost normal-case text-xl md:text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent mb-4 md:mb-8"
+          href="/"
+        >
+          Deal Dynamo</a
+        >
       </div>
       <div class="flex-none">
         <div class="dropdown dropdown-end">
@@ -57,7 +62,7 @@
     >
       <li>
         <div
-          class="normal-case menu-title text-xl font-bold text-primary flex flex-row"
+          class="normal-case menu-title text-xl text-primary flex flex-row md:text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent mb-4 md:mb-8"
         >
           <a href="/" class="grow">Deal Dynamo</a>
           <label for="admin-drawer" class="lg:hidden ml-3"> &#x2715; </label>
