@@ -266,6 +266,22 @@
     </ol>
 
     <h2 id="running-the-application">
+      Want to see how well your posts are doing?
+    </h2>
+    <p>
+      In your Amazon associates account, go to <a
+        href="https://associates.amazon.ca/home/account/tag/manage"
+        target="_blank">Manage your Tracking ID's</a
+      >
+      and add a new tracking ID that you want to link with your automated posts.
+      You can then view the performance of your posts by going to the
+      <a
+        href="https://associates.amazon.ca/p/reporting/earnings"
+        target="_blank">Earnings Report Page</a
+      > in your associates account and filter by the tracking ID you added.
+    </p>
+
+    <h2 id="running-the-application">
       Ensuring your posts are viewable by others
     </h2>
     <p>
