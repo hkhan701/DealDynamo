@@ -50,6 +50,14 @@
 <path d="M17.5 9.74145C17.7095 9.53198 18.0491 9.53198 18.2586 9.74145C18.468 9.95092 18.468 10.2905 18.2586 10.5C18.0491 10.7095 17.7095 10.7095 17.5 10.5C17.2905 10.2905 17.2905 9.95092 17.5 9.74145Z" fill="#1C274C"/>`,
     },
     {
+      name: "Advanced Deal Detection",
+      description:
+        "Our Amazon scraper is equipped to detect and capture a variety of deal types, including percentage-off sales, Lightning Deals, clip-on coupons, and promotion codes, ensuring you capture every possible saving opportunity.",
+      svgContent: `<path d="M12 6V18" stroke="#1C274C" stroke-width="1.5" stroke-linecap="round"/>
+<path d="M15 9.5C15 8.11929 13.6569 7 12 7C10.3431 7 9 8.11929 9 9.5C9 10.8807 10.3431 12 12 12C13.6569 12 15 13.1193 15 14.5C15 15.8807 13.6569 17 12 17C10.3431 17 9 15.8807 9 14.5" stroke="#1C274C" stroke-width="1.5" stroke-linecap="round"/>
+<path d="M7 3.33782C8.47087 2.48697 10.1786 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 10.1786 2.48697 8.47087 3.33782 7" stroke="#1C274C" stroke-width="1.5" stroke-linecap="round"/>`,
+    },
+    {
       name: "Customizable Posting Schedule",
       description:
         "Set specific times, session limits, and delays between posts to tailor your posting strategy.",
@@ -217,6 +225,87 @@
           </div>
         </div>
       {/each}
+    </div>
+  </div>
+</div>
+
+<div class="hero min-h-[60vh] mt-12">
+  <div class="hero-content text-center pb-16 pt-4 px-4">
+    <div class="max-w-lg">
+      <div
+        class="text-3xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent mt-4"
+      >
+        Want to see Deal Dynamo in Action?
+      </div>
+      <div
+        class="flex flex-col lg:flex-row mt-8 gap-6 place-content-center content-center"
+      >
+        <div class="hidden md:block">
+          <a
+            href="https://www.facebook.com/groups/1382548942690077"
+            target="_blank"
+            class="link"
+          >
+            <div class="mockup-browser border">
+              <div class="mockup-browser-toolbar">
+                <div class="input" style="background:#eee;">
+                  www.facebook.com/groups/OhCanadaDeals
+                </div>
+              </div>
+              <div class="flex justify-center">
+                <img
+                  alt="Screenshot of Ohacanadadeals homepage"
+                  class="aspect-[1159/533]"
+                  src="/images/homepage.png"
+                />
+              </div>
+            </div>
+          </a>
+        </div>
+        <div class="md:hidden">
+          <a
+            href="https://www.facebook.com/groups/1382548942690077"
+            target="_blank"
+            class="link"
+          >
+            <div class="card shadow-xl border overflow-hidden">
+              <img
+                alt="Screenshot of Ohacanadadeals homepage"
+                class="aspect-[1149/533]"
+                src="/images/example-home.png"
+              />
+            </div>
+          </a>
+        </div>
+        <div class="min-w-[270px] lg:min-w-[420px] flex mt-6 lg:mt-0">
+          <div class="my-auto">
+            <div class="px-4 text-lg md:text-xl">
+              This <span class="font-bold whitespace-nowrap">Deals Group</span>
+              is powered by
+              <span class="underline decoration-secondary decoration-[3px]"
+                >Deal Dynamo</span
+              > — your ultimate tool for automating Amazon deals to Facebook.
+            </div>
+            <div class="px-4 mt-6 text-lg md:text-xl">
+              Join the <a
+                href="https://www.facebook.com/groups/1382548942690077"
+                class="link font-bold"
+                target="_blank">live Facebook group</a
+              > to see real-time examples of Deal Dynamo in action.
+            </div>
+            <div class="mt-4 text-large">
+              <a
+                href="https://www.facebook.com/groups/1382548942690077"
+                target="_blank"
+              >
+                <button class="btn btn-primary btn-wide mt-3"
+                  >See it in Action</button
+                >
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

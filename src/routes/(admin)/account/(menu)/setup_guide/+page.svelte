@@ -48,25 +48,25 @@
     <h2 id="thresholds">Thresholds:</h2>
     <ul>
       <li>
-        <code>Minimum Savings Threshold</code>: {ToolTipMessages.minimum_savings_threshold}
+        <code>Minimum Savings Requirement</code>: {ToolTipMessages.minimum_savings_threshold}
       </li>
       <li>
-        <code>Cleanup Days Threshold</code>: {ToolTipMessages.cleanup_days_threshold}
+        <code>Repost Interval (Days)</code>: {ToolTipMessages.cleanup_days_threshold}
       </li>
       <li>
         <code>Maximum Posts Per Session</code>: {ToolTipMessages.maximum_posts_per_session}
       </li>
       <li>
-        <code>Delay Between Posts</code>: {ToolTipMessages.delay_between_posts}
+        <code>Time Between Posts (Seconds)</code>: {ToolTipMessages.delay_between_posts}
       </li>
       <li>
-        <code>Delay Between Sessions</code>: {ToolTipMessages.delay_between_sessions}
+        <code>Session Interval (Seconds)</code>: {ToolTipMessages.delay_between_sessions}
       </li>
       <li>
-        <code>Recently Updated Hour Threshold</code>: {ToolTipMessages.recently_updated_hour_threshold}
+        <code>Recent Update Window (Hours)</code>: {ToolTipMessages.recently_updated_hour_threshold}
       </li>
       <li>
-        <code>Special Message Threshold</code>: {ToolTipMessages.special_message_threshold}
+        <code>Special Message Requirement</code>: {ToolTipMessages.special_message_threshold}
       </li>
     </ul>
 
@@ -88,10 +88,10 @@
     <h2 id="posting-schedule">Posting Schedule:</h2>
     <ul>
       <li>
-        <code>Start Time</code>: Start time for posting deals (format: "HH:MM").
+        <code>Start Time</code>: Start time for posting deals.
       </li>
       <li>
-        <code>End Time</code>: End time for posting deals (format: "HH:MM").
+        <code>End Time</code>: End time for posting deals.
       </li>
     </ul>
 

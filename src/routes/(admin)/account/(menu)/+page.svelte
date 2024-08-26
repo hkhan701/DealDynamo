@@ -160,11 +160,13 @@
     <div
       class="tab-content form-section grid grid-cols-1 md:grid-cols-2 gap-4 mb-6 mt-6"
     >
-      <h2 class="col-span-1 md:col-span-2 text-xl font-semibold">Thresholds</h2>
+      <h2 class="col-span-1 md:col-span-2 text-xl font-semibold">
+        Posting Preferences
+      </h2>
 
       <div class="form-group">
         <label class="label" for="minimum-savings-threshold">
-          <span class="label-text">Minimum Savings Threshold</span>
+          <span class="label-text">Minimum Savings Requirement</span>
         </label>
         <input
           type="number"
@@ -177,7 +179,7 @@
 
       <div class="form-group">
         <label class="label" for="cleanup-days-threshold">
-          <span class="label-text">Cleanup Days Threshold</span>
+          <span class="label-text">Repost Interval (Days):</span>
         </label>
         <input
           type="number"
@@ -203,7 +205,7 @@
 
       <div class="form-group">
         <label class="label" for="delay-between-posts">
-          <span class="label-text">Delay Between Posts (seconds)</span>
+          <span class="label-text">Time Between Posts (Seconds)</span>
         </label>
         <input
           type="number"
@@ -216,7 +218,7 @@
 
       <div class="form-group">
         <label class="label" for="delay-between-sessions">
-          <span class="label-text">Delay Between Sessions (seconds)</span>
+          <span class="label-text">Session Interval (Seconds):</span>
         </label>
         <input
           type="number"
@@ -229,7 +231,7 @@
 
       <div class="form-group">
         <label class="label" for="recently-updated-hour-threshold">
-          <span class="label-text">Recently Updated Hour Threshold</span>
+          <span class="label-text">Recent Update Window (Hours):</span>
         </label>
         <input
           type="number"
@@ -242,7 +244,7 @@
 
       <div class="form-group">
         <label class="label" for="special-message-threshold">
-          <span class="label-text">Special Message Threshold</span>
+          <span class="label-text">Special Message Requirement</span>
         </label>
         <input
           type="number"
