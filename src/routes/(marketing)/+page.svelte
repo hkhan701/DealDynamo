@@ -272,7 +272,7 @@
               <img
                 alt="Screenshot of Ohacanadadeals homepage"
                 class="aspect-[1149/533]"
-                src="/images/example-home.png"
+                src="/images/homepage.png"
               />
             </div>
           </a>
