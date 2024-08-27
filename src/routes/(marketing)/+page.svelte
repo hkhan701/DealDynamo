@@ -130,7 +130,7 @@
 <svelte:head>
   <title>{WebsiteName}</title>
   <meta name="description" content={WebsiteDescription} />
-  <meta property="og:image" content="/static/favicon.png" />
+  <meta property="og:image" content="/images/favicon.png" />
   <!-- eslint-disable-next-line svelte/no-at-html-tags -->
   {@html jsonldScript}
 </svelte:head>
