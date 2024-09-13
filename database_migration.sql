@@ -19,6 +19,7 @@ create table
     access_token text null,
     updated_at timestamp with time zone null default now(),
     running_status boolean null default false,
+    associate_tag_percentage integer null,
     constraint user_settings_pkey primary key (user_id),
     constraint user_settings_user_id_fkey foreign key (user_id) references auth.users (id) on delete cascade
   ) tablespace pg_default;
