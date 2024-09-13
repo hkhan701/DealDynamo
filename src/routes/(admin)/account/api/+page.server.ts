@@ -9,6 +9,7 @@ export const actions = {
   
     const formData = await request.formData()
     const runningStatus = formData.get("runningStatus") === "on"
+    const country = formData.get("country") as string
     const minimumSavingsThreshold = parseInt(formData.get("minimumSavingsThreshold") as string, 10) || 0
     const cleanupDaysThreshold = parseInt(formData.get("cleanupDaysThreshold") as string, 10) || 0
     const maximumPostsPerSession = parseInt(formData.get("maximumPostsPerSession") as string, 10) || 0
@@ -95,6 +96,7 @@ export const actions = {
     const { error } = await supabase.from("user_settings").upsert({
       user_id: session.user.id,
       running_status: runningStatus,
+      country: country,
       minimum_savings_threshold: minimumSavingsThreshold,
       cleanup_days_threshold: cleanupDaysThreshold,
       maximum_posts_per_session: maximumPostsPerSession,
@@ -121,6 +123,7 @@ export const actions = {
   
     return {
       runningStatus,
+      country,
       minimumSavingsThreshold,
       cleanupDaysThreshold,
       maximumPostsPerSession,

@@ -16,6 +16,7 @@
   // Define the configuration settings
   let config = {
     running_status: false,
+    country: "CA",
     minimum_savings_threshold: 0,
     cleanup_days_threshold: 0,
     maximum_posts_per_session: 0,
@@ -42,6 +43,7 @@
   onMount(() => {
     if (userSettings) {
       config.running_status = userSettings.running_status || false
+      config.country = userSettings.country || "CA"
       config.minimum_savings_threshold =
         userSettings.minimum_savings_threshold || 0
       config.cleanup_days_threshold = userSettings.cleanup_days_threshold || 0
@@ -139,6 +141,25 @@
             id="running_status"
           />
         </div>
+      </div>
+    </div>
+
+    <!-- Country Selection Section -->
+    <div class="form-section mb-6">
+      <h2 class="text-xl font-semibold">Select Country</h2>
+      <div class="form-group">
+        <label class="label" for="country">
+          <span class="label-text">Country</span>
+        </label>
+        <select
+          class="select select-bordered w-full"
+          name="country"
+          id="country"
+          bind:value={config.country}
+        >
+          <option value="CA">Canada</option>
+          <option value="US" disabled>United States (Coming Soon!)</option>
+        </select>
       </div>
     </div>
 

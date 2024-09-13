@@ -2,6 +2,7 @@
 create table
   public.user_settings (
     user_id uuid not null,
+    country text null default 'CA'::text,
     minimum_savings_threshold integer null default 30,
     cleanup_days_threshold integer null default 5,
     maximum_posts_per_session integer null default 15,
@@ -19,7 +20,7 @@ create table
     access_token text null,
     updated_at timestamp with time zone null default now(),
     running_status boolean null default false,
-    associate_tag_percentage integer null,
+    associate_tag_percentage integer null default 0,
     constraint user_settings_pkey primary key (user_id),
     constraint user_settings_user_id_fkey foreign key (user_id) references auth.users (id) on delete cascade
   ) tablespace pg_default;

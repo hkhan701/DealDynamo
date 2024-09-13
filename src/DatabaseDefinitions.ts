@@ -71,6 +71,7 @@ export interface Database {
         Row: {
           user_id: string
           running_status: boolean
+          country: string,
           minimum_savings_threshold: number
           cleanup_days_threshold: number
           maximum_posts_per_session: number
@@ -91,6 +92,7 @@ export interface Database {
         Insert: {
           user_id: string
           running_status?: boolean
+          country?: string
           minimum_savings_threshold?: number
           cleanup_days_threshold?: number
           maximum_posts_per_session?: number
@@ -111,6 +113,7 @@ export interface Database {
         Update: {
           user_id?: string
           running_status?: boolean
+          country?: string
           minimum_savings_threshold?: number
           cleanup_days_threshold?: number
           maximum_posts_per_session?: number
