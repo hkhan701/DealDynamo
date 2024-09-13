@@ -123,7 +123,7 @@
           This is the main toggle to run and enable the automated posting. After
           toggling on and pressing save, wait for 5 minutes. Refresh to see if
           any deals are posted on your Facebook group or page. If you refresh
-          and notice the running status turns off, an may have error occurred.
+          and notice the running status turns off, an error may have occurred.
           Please double-check your configuration or <a
             href="/contact_us"
             class="link text-primary font-semibold">contact support</a
