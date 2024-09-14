@@ -105,9 +105,9 @@
 <path d="M16 9.88432V5.41121M16 5.41121V2.63519C16 2.39905 16.1676 2.19612 16.3994 2.15144L16.8855 2.05779C17.4738 1.94443 18.0821 1.99855 18.6412 2.214L18.7203 2.24451C19.2746 2.4581 19.8807 2.498 20.4582 2.35891C20.7343 2.2924 21 2.50168 21 2.78573V5.00723C21 5.2442 20.8376 5.45031 20.6073 5.5058L20.5407 5.52184C19.9095 5.67387 19.247 5.63026 18.6412 5.39679C18.0821 5.18135 17.4738 5.12722 16.8855 5.24058L16 5.41121Z" stroke="#1C274C" stroke-width="1.5" stroke-linecap="round"/>`,
     },
     {
-      name: "Custom Messages (Coming Soon)",
+      name: "Custom Messages",
       description:
-        "Set personalized messages alongside deal prices and savings to better connect with your audience.",
+        "Set personalized messages alongside deal prices and savings to better connect with your audience. Try it out below!",
       svgContent: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
   <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
   <line x1="9" y1="8" x2="15" y2="8"></line>
@@ -125,6 +125,16 @@
 </svg>`,
     },
   ]
+
+  let config = {
+    first_line_message: "🚨 HOT DEAL ALERT! 🔥",
+    bottom_line_message:
+      "🛒 Grab it before it's gone!\n🔗 Link in comments\n#DealAlert #AmazonFinds",
+  }
+
+  function formatNewlines(text: string) {
+    return text.replace(/\n/g, "<br>")
+  }
 </script>
 
 <svelte:head>
@@ -304,6 +314,74 @@
               </a>
             </div>
           </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="hero min-h-[60vh] mt-12 bg-base-200">
+  <div class="hero-content flex-col lg:flex-row-reverse gap-8 w-full max-w-7xl">
+    <div class="text-center lg:text-left lg:w-1/2">
+      <h1
+        class="text-3xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent"
+      >
+        Try our Facebook Post Preview!
+      </h1>
+      <p class="py-6">
+        Customize your deal post and see how it will look on Facebook in
+        real-time.
+      </p>
+      <div class="card flex-shrink-0 w-full shadow-2xl bg-base-100">
+        <div class="card-body">
+          <div class="form-control">
+            <label class="label" for="first_line_message">
+              <span class="label-text">First Line Message:</span>
+            </label>
+            <input
+              id="first_line_message"
+              type="text"
+              bind:value={config.first_line_message}
+              placeholder="Enter your attention-grabbing first line"
+              class="input input-bordered w-full"
+            />
+          </div>
+          <div class="form-control">
+            <label class="label" for="bottom_line_message">
+              <span class="label-text">Bottom Message:</span>
+            </label>
+            <textarea
+              id="bottom_line_message"
+              bind:value={config.bottom_line_message}
+              placeholder="Enter your custom message for the bottom"
+              class="textarea textarea-bordered h-24"
+            ></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="flex flex-col gap-8 lg:w-2/5 w-full md:w-3/4">
+      <div class="card bg-base-100 shadow-xl">
+        <div class="card-body">
+          <div class="flex items-center mb-4">
+            <img
+              src="/images/favicon.png"
+              alt="User Avatar"
+              class="rounded-full w-12 h-12 mr-3"
+            />
+            <div>
+              <p class="font-semibold">Deal Dynamo</p>
+              <p class="text-gray-500 text-sm">Just now</p>
+            </div>
+          </div>
+          <p class="text-lg">{config.first_line_message}</p>
+          <p class="text-lg">Save 30% with Code: Q2FYBW7O</p>
+          <p class="text-lg">21% OFF + $14 Clip Coupon</p>
+          <p class="text-lg font-bold">𝗢𝗡𝗟𝗬 $27.99! 💸✨</p>
+          <p class="text-lg mb-4">15W MagSafe Car Mount Charger</p>
+          <p class="text-lg pt-4">
+            {@html formatNewlines(config.bottom_line_message)}
+          </p>
         </div>
       </div>
     </div>

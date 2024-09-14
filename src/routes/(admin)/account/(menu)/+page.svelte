@@ -503,6 +503,7 @@
       {/each}
     </div>
 
+    <!-- Customize Your Post -->
     <div class="form-section mb-6">
       <h2 class="text-xl font-semibold">Customize Your Post</h2>
       <div class="form-group mb-4">
