@@ -107,7 +107,9 @@
     {
       name: "Custom Messages",
       description:
-        "Set personalized messages alongside deal prices and savings to better connect with your audience. Try it out below!",
+        "Set personalized messages alongside deal prices and savings to better connect with your audience",
+      link: "/#custom-messages",
+      linkText: "Try it out below!",
       svgContent: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
   <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
   <line x1="9" y1="8" x2="15" y2="8"></line>
@@ -320,7 +322,7 @@
   </div>
 </div>
 
-<div class="hero min-h-[60vh] mt-12 bg-base-200">
+<div id="custom-messages" class="hero min-h-[60vh] mt-12 bg-base-200">
   <div class="hero-content flex-col lg:flex-row-reverse gap-8 w-full max-w-7xl">
     <div class="text-center lg:text-left lg:w-1/2">
       <h1
