@@ -87,6 +87,8 @@ export interface Database {
           fb_page_id: string
           logins: Json
           access_token: string
+          first_line_message: string
+          bottom_line_message: string
           updated_at: Date | null
         }
         Insert: {
@@ -108,6 +110,8 @@ export interface Database {
           fb_page_id?: string
           logins?: Json
           access_token?: string
+          first_line_message?: string
+          bottom_line_message?: string
           updated_at?: Date | null
         }
         Update: {
@@ -129,6 +133,8 @@ export interface Database {
           fb_page_id?: string
           logins?: Json
           access_token?: string
+          first_line_message?: string
+          bottom_line_message?: string
           updated_at?: Date | null
         }
         Relationships: [

@@ -24,6 +24,8 @@ export const actions = {
     const fbGroupLink = formData.get("fbGroupLink") as string
     const fbPageId = formData.get("fbPageId") as string
     const accessToken = formData.get("accessToken") as string
+    const firstLineMessage = formData.get("firstLineMessage") as string
+    const bottomLineMessage = formData.get("bottomLineMessage") as string
     
     // Parse logins
     const logins = [
@@ -112,6 +114,8 @@ export const actions = {
       fb_page_id: fbPageId,
       logins: logins.length > 0 ? logins : null,
       access_token: accessToken,
+      first_line_message: firstLineMessage,
+      bottom_line_message: bottomLineMessage,
       updated_at: new Date(),
     })
   
@@ -139,6 +143,8 @@ export const actions = {
       fbPageId,
       logins,
       accessToken,
+      firstLineMessage,
+      bottomLineMessage,
     }
   },
   updateEmail: async ({ request, locals: { supabase, safeGetSession } }) => {

@@ -21,6 +21,8 @@ create table
     updated_at timestamp with time zone null default now(),
     running_status boolean null default false,
     associate_tag_percentage integer null default 0,
+    first_line_message text not null default '🎉 Limited Time Offer! 🎉'::text,
+    bottom_line_message text not null default ''::text,
     constraint user_settings_pkey primary key (user_id),
     constraint user_settings_user_id_fkey foreign key (user_id) references auth.users (id) on delete cascade
   ) tablespace pg_default;

@@ -36,6 +36,8 @@
       { email: "", password: "" },
     ],
     access_token: "",
+    first_line_message: "",
+    bottom_line_message: "",
   }
 
   let initialConfig = JSON.parse(JSON.stringify(config)) // Store the initial
@@ -70,6 +72,8 @@
               { email: "", password: "" },
             ]
       config.access_token = userSettings.access_token || ""
+      config.first_line_message = userSettings.first_line_message || ""
+      config.bottom_line_message = userSettings.bottom_line_message || ""
 
       initialConfig = JSON.parse(JSON.stringify(config)) // Store the initial config
     }
@@ -97,6 +101,11 @@
 
   // Reactive statement to check if there are changes
   $: hasChanges = JSON.stringify(config) !== JSON.stringify(initialConfig)
+
+  // Convert newlines to <br> for displaying in the preview
+  const formatNewlines = (text: string) => {
+    return text.replace(/\n/g, "<br>")
+  }
 </script>
 
 <svelte:head>
@@ -492,6 +501,74 @@
           </div>
         </div>
       {/each}
+    </div>
+
+    <div class="form-section mb-6">
+      <h2 class="text-xl font-semibold">Customize Your Post</h2>
+      <div class="form-group mb-4">
+        <label class="label text-sm" for="first_line_message">First Line:</label
+        >
+        <input
+          id="first_line_message"
+          name="firstLineMessage"
+          bind:value={config.first_line_message}
+          class="textarea textarea-bordered w-full"
+          placeholder="Enter your custom first line message"
+        />
+      </div>
+
+      <!-- Custom Bottom Message -->
+      <div class="form-group mb-4">
+        <label class="label text-sm" for="bottom_line_message"
+          >Bottom Message:</label
+        >
+        <textarea
+          id="bottom_line_message"
+          name="bottomLineMessage"
+          bind:value={config.bottom_line_message}
+          class="textarea textarea-bordered w-full"
+          placeholder="Enter your custom message for the bottom"
+        ></textarea>
+      </div>
+    </div>
+
+    <!-- Facebook-Style Post Preview -->
+    <h2 class="text-xl font-semibold">Facebook Post Preview</h2>
+    <div class="bg-grey rounded-lg shadow-2xl p-6 mt-8 max-w-lg bg-white">
+      <!-- Post Header: Avatar, Username, Timestamp -->
+      <div class="flex items-center mb-4">
+        <img
+          src="/images/favicon.png"
+          alt="User Avatar"
+          class="rounded-full w-12 h-12 mr-3"
+        />
+        <div>
+          <p class="font-semibold">Deal Dynamo</p>
+          <p class="text-gray-500 text-sm">Just now</p>
+        </div>
+      </div>
+
+      <!-- First Line -->
+      <p class="text-lg mb-2">
+        {config.first_line_message}
+      </p>
+
+      <!-- Discount Details -->
+      <p class="text-lg mb-2">Save 30% with Code: Q2FYBW7O</p>
+
+      <!-- Extra Details (e.g., coupons, additional savings) -->
+      <p class="text-lg mb-2">21% OFF + $14 Clip Coupon</p>
+
+      <!-- Final Price -->
+      <p class="text-lg font-bold mb-2">𝗢𝗡𝗟𝗬 $27.99! 💸✨</p>
+
+      <!-- Product Name -->
+      <p class="text-lg mb-6">15W MagSafe Car Mount Charger</p>
+
+      <!-- Bottom Message -->
+      <p class="text-lg pt-4">
+        {@html formatNewlines(config.bottom_line_message)}
+      </p>
     </div>
 
     {#if $page?.form?.errorMessage}
