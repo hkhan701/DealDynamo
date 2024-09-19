@@ -25,6 +25,7 @@
     recently_updated_hour_threshold: 0,
     special_message_threshold: 0,
     random_image_toggle: false,
+    deeplink_toggle: false,
     associate_tag: "",
     start_time: "",
     end_time: "",
@@ -58,6 +59,7 @@
       config.special_message_threshold =
         userSettings.special_message_threshold || 0
       config.random_image_toggle = userSettings.random_image_toggle || false
+      config.deeplink_toggle = userSettings.deeplink_toggle || false
       config.associate_tag = userSettings.associate_tag || ""
       config.start_time = userSettings.start_time || ""
       config.end_time = userSettings.end_time || ""
@@ -138,6 +140,12 @@
             class="link text-primary font-semibold">contact support</a
           >.
         </p>
+
+        <p class="label-text text-md mb-4">
+          Note: In order for changes to appear you need to stop and restart the
+          program
+        </p>
+
         <div class="flex items-center">
           <label class="label text-lg font-semibold mr-4" for="running_status"
             >Running Status:</label
@@ -300,6 +308,24 @@
           name="randomImageToggle"
           id="random_image_toggle"
         />
+      </div>
+
+      <!-- Deeplink Toggle -->
+      <div class="form-group mt-4">
+        <label class="label" for="deeplink_toggle">
+          <span class="label-text">Enable Deeplinks (Experimental)</span>
+        </label>
+        <input
+          type="checkbox"
+          class="toggle toggle-success"
+          bind:checked={config.deeplink_toggle}
+          name="deeplinkToggle"
+          id="deeplink_toggle"
+        />
+        <p class="text-xs mt-2 text-gray-600">
+          Warning: This feature is experimental. If the deeplink service is not
+          working correctly, it will default to normal links.
+        </p>
       </div>
     </div>
 

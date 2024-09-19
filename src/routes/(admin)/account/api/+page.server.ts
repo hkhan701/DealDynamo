@@ -18,6 +18,7 @@ export const actions = {
     const recentlyUpdatedHourThreshold = parseInt(formData.get("recentlyUpdatedHourThreshold") as string, 10) || 0
     const specialMessageThreshold = parseInt(formData.get("specialMessageThreshold") as string, 10) || 0
     const randomImageToggle = formData.get("randomImageToggle") === "on"
+    const deeplinkToggle = formData.get("deeplinkToggle") === "on"
     const associateTag = formData.get("associateTag") as string
     const startTime = formData.get("startTime") as string
     const endTime = formData.get("endTime") as string
@@ -107,6 +108,7 @@ export const actions = {
       recently_updated_hour_threshold: recentlyUpdatedHourThreshold,
       special_message_threshold: specialMessageThreshold,
       random_image_toggle: randomImageToggle,
+      deeplink_toggle: deeplinkToggle,
       associate_tag: associateTag,
       start_time: startTime,
       end_time: endTime,
@@ -136,6 +138,7 @@ export const actions = {
       recentlyUpdatedHourThreshold,
       specialMessageThreshold,
       randomImageToggle,
+      deeplinkToggle,
       associateTag,
       startTime,
       endTime,

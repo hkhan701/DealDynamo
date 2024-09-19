@@ -80,6 +80,7 @@ export interface Database {
           recently_updated_hour_threshold: number
           special_message_threshold: number
           random_image_toggle: boolean
+          deeplink_toggle: boolean
           associate_tag: string
           start_time: string
           end_time: string
@@ -103,6 +104,7 @@ export interface Database {
           recently_updated_hour_threshold?: number
           special_message_threshold?: number
           random_image_toggle?: boolean
+          deeplink_toggle?: boolean
           associate_tag?: string
           start_time?: string
           end_time?: string
@@ -126,6 +128,7 @@ export interface Database {
           recently_updated_hour_threshold?: number
           special_message_threshold?: number
           random_image_toggle?: boolean
+          deeplink_toggle?: boolean
           associate_tag?: string
           start_time?: string
           end_time?: string
