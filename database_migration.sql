@@ -23,6 +23,7 @@ create table
     associate_tag_percentage integer null default 0,
     first_line_message text not null default '🎉 Limited Time Offer! 🎉'::text,
     bottom_line_message text not null default ''::text,
+    custom_template text null default '🎉 Limited Time Offer! 🎉 Save {if promo_code_percent_off}{promo_code_percent_off}% with Code: {promo_code}{endif} {if percent_off_list_price}{percent_off_list_price}% OFF{endif} {if clip_coupon_savings} + ${clip_coupon_savings} Clip Coupon{endif} 𝗢𝗡𝗟𝗬 {final_price}! 💸✨  {if image_link}{product_name}{endif} {if final_savings_percent}Your total savings: {final_savings_percent}% OFF{endif}  Availability, Prices, promotions, coupons, and glitch deals are all subject to change. (AD)'::text,
     constraint user_settings_pkey primary key (user_id),
     constraint user_settings_user_id_fkey foreign key (user_id) references auth.users (id) on delete cascade
   ) tablespace pg_default;

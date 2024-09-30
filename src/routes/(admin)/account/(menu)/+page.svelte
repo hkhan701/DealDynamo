@@ -13,6 +13,17 @@
   let adminSection: Writable<string> = getContext("adminSection")
   adminSection.set("home")
 
+  let example_values = {
+    product_name: "15W MagSafe Car Mount Charger",
+    percent_off_list_price: 21,
+    clip_coupon_savings: 14,
+    promo_code: "Q2FYBW7O",
+    promo_code_percent_off: 10,
+    final_savings_percent: 50,
+    final_price: 27.99,
+    image_link: "",
+  }
+
   // Define the configuration settings
   let config = {
     running_status: false,
@@ -39,6 +50,7 @@
     access_token: "",
     first_line_message: "",
     bottom_line_message: "",
+    custom_template: "",
   }
 
   let initialConfig = JSON.parse(JSON.stringify(config)) // Store the initial
@@ -76,6 +88,7 @@
       config.access_token = userSettings.access_token || ""
       config.first_line_message = userSettings.first_line_message || ""
       config.bottom_line_message = userSettings.bottom_line_message || ""
+      config.custom_template = userSettings.custom_template || ""
 
       initialConfig = JSON.parse(JSON.stringify(config)) // Store the initial config
     }
@@ -83,6 +96,7 @@
 
   let loading = false
   let showPopup = false
+  let copiedToClipboard = false
 
   // Handle form submission
   const handleSubmit: SubmitFunction = () => {
@@ -107,6 +121,100 @@
   // Convert newlines to <br> for displaying in the preview
   const formatNewlines = (text: string) => {
     return text.replace(/\n/g, "<br>")
+  }
+
+  function populateTemplate(
+    template: string,
+    data: Record<string, any>,
+  ): string {
+    // Function to handle {if key}...{endif} blocks
+    function processConditionals(template: string): string {
+      const lines = template.split("\n")
+      const processedLines = lines.map((line) => {
+        // Find all conditionals in the line
+        const conditionalRegex = /{if\s+(\w+)}(.*?){endif}/g
+        let match
+        let newLine = line
+        let hasContent = false
+
+        while ((match = conditionalRegex.exec(line)) !== null) {
+          const [fullMatch, key, content] = match
+          if (data[key]) {
+            // Replace the conditional with its content
+            newLine = newLine.replace(fullMatch, content.trim())
+            hasContent = true
+          } else {
+            // Remove the entire conditional
+            newLine = newLine.replace(fullMatch, "")
+          }
+        }
+
+        // If the line had conditionals and is now empty, return null to remove it
+        return line.includes("{if") && !hasContent ? null : newLine
+      })
+
+      // Filter out null lines and join the result
+      return processedLines.filter((line) => line !== null).join("\n")
+    }
+
+    // First, process the {if ...}{endif} conditionals
+    let processedTemplate = processConditionals(template)
+
+    // Then, replace the remaining placeholders with the actual data or fallback
+    processedTemplate = processedTemplate.replace(
+      /{(\w+)}/g,
+      (_, key) => (data[key] !== undefined ? data[key] : "N/A"), // Use fallback if key is missing
+    )
+
+    // Remove any triple (or more) newlines that might have been created
+    processedTemplate = processedTemplate.replace(/\n{3,}/g, "\n\n")
+
+    return processedTemplate.trim()
+  }
+
+  const availablePlaceholders = [
+    {
+      key: "product_name",
+      description: 'The product name (e.g. "15W MagSafe Car Mount Charger")',
+    },
+    {
+      key: "percent_off_list_price",
+      description: "Percent off the list price (e.g. 21%)",
+    },
+    {
+      key: "clip_coupon_savings",
+      description: "Savings from clip coupons (e.g. $14)",
+    },
+    {
+      key: "promo_code",
+      description: 'Promo code for discounts (e.g. "Q2FYBW7O")',
+    },
+    {
+      key: "promo_code_percent_off",
+      description: "Percent off with promo code (e.g. 30%)",
+    },
+    {
+      key: "final_savings_percent",
+      description: "Final savings in percentage after all discounts (e.g. 50%)",
+    },
+    {
+      key: "final_price",
+      description: "Final price after all discounts (e.g. $27.99)",
+    },
+    {
+      key: "image_link",
+      description:
+        "Only used as a conditional placeholder for image based posts (e.g. product name will show if image is available)",
+    },
+  ]
+
+  function copyToClipboard(text: string) {
+    navigator.clipboard.writeText(`{${text}}`)
+
+    copiedToClipboard = true
+    setTimeout(() => {
+      copiedToClipboard = false
+    }, 3000) // Hide the popup after 3 seconds
   }
 </script>
 
@@ -546,99 +654,177 @@
     <!-- Customize Your Post -->
     <div class="form-section mb-6">
       <h2 class="text-xl font-semibold">Customize Your Post</h2>
-      <div class="form-group mb-4">
-        <label class="label text-sm" for="first_line_message">First Line:</label
-        >
-        <input
-          id="first_line_message"
-          name="firstLineMessage"
-          bind:value={config.first_line_message}
-          class="textarea textarea-bordered w-full"
-          placeholder="Enter your custom first line message"
-        />
+      <div class="flex flex-col md:flex-row gap-6">
+        <div class="mt-4 md:w-1/2">
+          <div class="form-group mb-4">
+            <textarea
+              id="custom_template"
+              name="customTemplate"
+              bind:value={config.custom_template}
+              class="textarea textarea-bordered w-full h-80"
+              placeholder="Enter your custom template here"
+            ></textarea>
+          </div>
+        </div>
+
+        <!-- Available Placeholders (Right side, responsive grid) -->
+        <div class="md:w-1/2">
+          <h3 class="text-lg font-semibold mb-2">Available Placeholders:</h3>
+          <div class="grid grid-cols-2 md:grid-cols-3 gap-2">
+            {#each availablePlaceholders as placeholder}
+              <div
+                class="tooltip tooltip-bottom"
+                data-tip={placeholder.description}
+              >
+                <button
+                  class="btn btn-outline btn-primary w-full"
+                  on:click={() => copyToClipboard(placeholder.key)}
+                >
+                  {placeholder.key}
+                </button>
+              </div>
+            {/each}
+          </div>
+        </div>
       </div>
 
-      <!-- Custom Bottom Message -->
-      <div class="form-group mb-4">
-        <label class="label text-sm" for="bottom_line_message"
-          >Bottom Message:</label
-        >
-        <textarea
-          id="bottom_line_message"
-          name="bottomLineMessage"
-          bind:value={config.bottom_line_message}
-          class="textarea textarea-bordered w-full"
-          placeholder="Enter your custom message for the bottom"
-        ></textarea>
+      <!-- Facebook Post Preview -->
+      <div
+        class="flex flex-col lg:flex-row justify-between space-y-6 lg:space-y-0 lg:space-x-6"
+      >
+        <!-- Facebook Post Preview with Preview Link -->
+        <div class="flex-1">
+          <h2 class="text-xl font-semibold">
+            Facebook Post Preview with Preview Link
+          </h2>
+          <div class="bg-grey rounded-lg shadow-2xl pt-0.5 mt-4 bg-white">
+            <!-- Post Header: Avatar, Username, Timestamp -->
+            <div class="flex items-center m-6">
+              <img
+                src="/images/favicon.png"
+                alt="User Avatar"
+                class="rounded-full w-12 h-12 mr-3"
+              />
+              <div>
+                <p class="font-semibold">Deal Dynamo</p>
+                <p class="text-gray-500 text-sm">Just now</p>
+              </div>
+            </div>
+
+            <!-- Custom Template Preview -->
+            <p class="text-lg m-6">
+              {@html formatNewlines(
+                populateTemplate(config.custom_template, example_values),
+              )}
+            </p>
+
+            <!-- Link Preview -->
+            <div class="link-preview w-full bg-gray-700">
+              <img
+                src="https://placehold.co/600x400"
+                alt=""
+                class="w-full h-auto"
+              />
+              <div class="p-4">
+                <p class="text-sm text-white">AMAZON.CA</p>
+                <p class="text-lg text-white font-bold">
+                  {example_values.product_name}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Facebook Post Preview with Image -->
+        <div class="flex-1">
+          <h2 class="text-xl font-semibold">
+            Facebook Post Preview with Image
+          </h2>
+          <div class="bg-grey rounded-lg shadow-2xl pt-0.5 mt-4 bg-white">
+            <!-- Post Header: Avatar, Username, Timestamp -->
+            <div class="flex items-center m-6">
+              <img
+                src="/images/favicon.png"
+                alt="User Avatar"
+                class="rounded-full w-12 h-12 mr-3"
+              />
+              <div>
+                <p class="font-semibold">Deal Dynamo</p>
+                <p class="text-gray-500 text-sm">Just now</p>
+              </div>
+            </div>
+
+            <!-- Custom Template Preview -->
+            <p class="text-lg m-6">
+              {@html formatNewlines(
+                populateTemplate(config.custom_template, {
+                  ...example_values,
+                  image_link: "https://placehold.co/600x400",
+                }),
+              )}
+            </p>
+
+            <!-- Image Preview -->
+            <div class="link-preview w-full bg-gray-700">
+              <img
+                src="https://placehold.co/600x400"
+                alt=""
+                class="w-full h-auto"
+              />
+            </div>
+          </div>
+        </div>
       </div>
+
+      {#if $page?.form?.errorMessage}
+        <div class="toast toast-top">
+          <div class="alert alert-error text-wrap self-end">
+            <span>{$page?.form?.errorMessage}</span>
+          </div>
+        </div>
+      {/if}
+
+      {#if showPopup}
+        <div class="toast toast-top">
+          <div class="alert alert-success">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-6 w-6 shrink-0 stroke-current"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
+            </svg>
+            <span>Changes saved successfully!</span>
+          </div>
+        </div>
+      {/if}
+
+      {#if copiedToClipboard}
+        <div class="toast toast-top">
+          <div class="alert alert-success">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-6 w-6 shrink-0 stroke-current"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
+            </svg>
+            <span>Placeholder copied to clipboard!</span>
+          </div>
+        </div>
+      {/if}
     </div>
-
-    <!-- Facebook-Style Post Preview -->
-    <h2 class="text-xl font-semibold">Facebook Post Preview</h2>
-    <div class="bg-grey rounded-lg shadow-2xl p-6 mt-8 max-w-lg bg-white">
-      <!-- Post Header: Avatar, Username, Timestamp -->
-      <div class="flex items-center mb-4">
-        <img
-          src="/images/favicon.png"
-          alt="User Avatar"
-          class="rounded-full w-12 h-12 mr-3"
-        />
-        <div>
-          <p class="font-semibold">Deal Dynamo</p>
-          <p class="text-gray-500 text-sm">Just now</p>
-        </div>
-      </div>
-
-      <!-- First Line -->
-      <p class="text-lg mb-2">
-        {config.first_line_message}
-      </p>
-
-      <!-- Discount Details -->
-      <p class="text-lg mb-2">Save 30% with Code: Q2FYBW7O</p>
-
-      <!-- Extra Details (e.g., coupons, additional savings) -->
-      <p class="text-lg mb-2">21% OFF + $14 Clip Coupon</p>
-
-      <!-- Final Price -->
-      <p class="text-lg font-bold mb-2">𝗢𝗡𝗟𝗬 $27.99! 💸✨</p>
-
-      <!-- Product Name -->
-      <p class="text-lg mb-6">15W MagSafe Car Mount Charger</p>
-
-      <!-- Bottom Message -->
-      <p class="text-lg pt-4">
-        {@html formatNewlines(config.bottom_line_message)}
-      </p>
-    </div>
-
-    {#if $page?.form?.errorMessage}
-      <div class="toast toast-top">
-        <div class="alert alert-error text-wrap self-end">
-          <span>{$page?.form?.errorMessage}</span>
-        </div>
-      </div>
-    {/if}
-
-    {#if showPopup}
-      <div class="toast toast-top">
-        <div class="alert alert-success">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="h-6 w-6 shrink-0 stroke-current"
-            fill="none"
-            viewBox="0 0 24 24"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-            />
-          </svg>
-          <span>Changes saved successfully!</span>
-        </div>
-      </div>
-    {/if}
   </form>
 </div>

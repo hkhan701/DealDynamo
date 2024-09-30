@@ -25,8 +25,9 @@ export const actions = {
     const fbGroupLink = formData.get("fbGroupLink") as string
     const fbPageId = formData.get("fbPageId") as string
     const accessToken = formData.get("accessToken") as string
-    const firstLineMessage = formData.get("firstLineMessage") as string
-    const bottomLineMessage = formData.get("bottomLineMessage") as string
+    // const firstLineMessage = formData.get("firstLineMessage") as string
+    // const bottomLineMessage = formData.get("bottomLineMessage") as string
+    const customTemplate = formData.get("customTemplate") as string
     
     // Parse logins
     const logins = [
@@ -116,12 +117,14 @@ export const actions = {
       fb_page_id: fbPageId,
       logins: logins.length > 0 ? logins : null,
       access_token: accessToken,
-      first_line_message: firstLineMessage,
-      bottom_line_message: bottomLineMessage,
+      // first_line_message: firstLineMessage,
+      // bottom_line_message: bottomLineMessage,
+      custom_template: customTemplate,
       updated_at: new Date(),
     })
   
     if (error) {
+      console.error(error)
       return fail(500, {
         errorMessage: "Unknown error. If this persists please contact us.",
       })
@@ -146,8 +149,9 @@ export const actions = {
       fbPageId,
       logins,
       accessToken,
-      firstLineMessage,
-      bottomLineMessage,
+      // firstLineMessage,
+      // bottomLineMessage,
+      customTemplate
     }
   },
   updateEmail: async ({ request, locals: { supabase, safeGetSession } }) => {

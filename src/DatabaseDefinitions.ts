@@ -90,6 +90,7 @@ export interface Database {
           access_token: string
           first_line_message: string
           bottom_line_message: string
+          custom_template: string
           updated_at: Date | null
         }
         Insert: {
@@ -114,6 +115,7 @@ export interface Database {
           access_token?: string
           first_line_message?: string
           bottom_line_message?: string
+          custom_template?: string
           updated_at?: Date | null
         }
         Update: {
@@ -138,6 +140,7 @@ export interface Database {
           access_token?: string
           first_line_message?: string
           bottom_line_message?: string
+          custom_template?: string
           updated_at?: Date | null
         }
         Relationships: [
