@@ -127,15 +127,79 @@
 </svg>`,
     },
   ]
-
+  let example_values = {
+    product_name: "15W MagSafe Car Mount Charger",
+    percent_off_list_price: 21,
+    clip_coupon_savings: 14,
+    promo_code: "Q2FYBW7O",
+    promo_code_percent_off: 10,
+    final_savings_percent: 50,
+    final_price: 27.99,
+    image_link: "link",
+  }
   let config = {
-    first_line_message: "🚨 HOT DEAL ALERT! 🔥",
-    bottom_line_message:
-      "🛒 Grab it before it's gone!\n🔗 Link in comments\n#DealAlert #AmazonFinds",
+    custom_template: `🎉 Limited Time Offer! 🎉
+{if promo_code_percent_off}Save {promo_code_percent_off}% with Code: {promo_code}{endif}
+{if percent_off_list_price}{percent_off_list_price}% OFF{endif} {if clip_coupon_savings}+ $ {clip_coupon_savings} Clip Coupon{endif} 
+𝗢𝗡𝗟𝗬 {final_price}! 💸✨  
+
+{if image_link}{product_name}{endif} 
+{if final_savings_percent}Your total savings: {final_savings_percent}% OFF{endif}  
+
+Availability, Prices, promotions, coupons, and glitch deals are all subject to change. (AD)`,
   }
 
   function formatNewlines(text: string) {
     return text.replace(/\n/g, "<br>")
+  }
+
+  function populateTemplate(
+    template: string,
+    data: Record<string, any>,
+  ): string {
+    // Function to handle {if key}...{endif} blocks
+    function processConditionals(template: string): string {
+      const lines = template.split("\n")
+      const processedLines = lines.map((line) => {
+        // Find all conditionals in the line
+        const conditionalRegex = /{if\s+(\w+)}(.*?){endif}/g
+        let match
+        let newLine = line
+        let hasContent = false
+
+        while ((match = conditionalRegex.exec(line)) !== null) {
+          const [fullMatch, key, content] = match
+          if (data[key]) {
+            // Replace the conditional with its content
+            newLine = newLine.replace(fullMatch, content.trim())
+            hasContent = true
+          } else {
+            // Remove the entire conditional
+            newLine = newLine.replace(fullMatch, "")
+          }
+        }
+
+        // If the line had conditionals and is now empty, return null to remove it
+        return line.includes("{if") && !hasContent ? null : newLine
+      })
+
+      // Filter out null lines and join the result
+      return processedLines.filter((line) => line !== null).join("\n")
+    }
+
+    // First, process the {if ...}{endif} conditionals
+    let processedTemplate = processConditionals(template)
+
+    // Then, replace the remaining placeholders with the actual data or fallback
+    processedTemplate = processedTemplate.replace(
+      /{(\w+)}/g,
+      (_, key) => (data[key] !== undefined ? data[key] : "N/A"), // Use fallback if key is missing
+    )
+
+    // Remove any triple (or more) newlines that might have been created
+    processedTemplate = processedTemplate.replace(/\n{3,}/g, "\n\n")
+
+    return processedTemplate.trim()
   }
 </script>
 
@@ -179,8 +243,8 @@
   </div>
 </div>
 
-<div class="min-h-[60vh]">
-  <div class="pt-10 pb-8 px-7">
+<div class="min-h-[50vh]">
+  <div class="pt-10 pb-5 px-7">
     <div class="max-w-lg mx-auto text-center">
       <div
         class="text-3xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent"
@@ -323,8 +387,10 @@
 </div>
 
 <div id="custom-messages" class="hero min-h-[60vh] mt-12 bg-base-200">
-  <div class="hero-content flex-col lg:flex-row-reverse gap-8 w-full max-w-7xl">
-    <div class="text-center lg:text-left lg:w-1/2">
+  <div
+    class="hero-content flex-col lg:flex-row-reverse gap-8 w-full max-w-7xl px-4 md:px-8"
+  >
+    <div class="text-center lg:text-left lg:w-1/2 w-full">
       <h1
         class="text-3xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent"
       >
@@ -334,35 +400,23 @@
         Customize your deal post and see how it will look on Facebook in
         real-time.
       </p>
+
       <div class="card flex-shrink-0 w-full shadow-2xl bg-base-100">
         <div class="card-body">
-          <div class="form-control">
-            <label class="label" for="first_line_message">
-              <span class="label-text">First Line Message:</span>
-            </label>
-            <input
-              id="first_line_message"
-              type="text"
-              bind:value={config.first_line_message}
-              placeholder="Enter your attention-grabbing first line"
-              class="input input-bordered w-full"
-            />
-          </div>
-          <div class="form-control">
-            <label class="label" for="bottom_line_message">
-              <span class="label-text">Bottom Message:</span>
-            </label>
+          <div class="w-full">
             <textarea
-              id="bottom_line_message"
-              bind:value={config.bottom_line_message}
-              placeholder="Enter your custom message for the bottom"
-              class="textarea textarea-bordered h-24"
+              id="custom_template"
+              name="customTemplate"
+              bind:value={config.custom_template}
+              class="textarea textarea-bordered w-full h-60 md:h-80"
+              placeholder="Enter your custom template here"
             ></textarea>
           </div>
         </div>
       </div>
     </div>
-    <div class="flex flex-col gap-8 lg:w-2/5 w-full md:w-3/4">
+
+    <div class="flex flex-col lg:w-1/2 w-full">
       <div class="card bg-base-100 shadow-xl">
         <div class="card-body">
           <div class="flex items-center mb-4">
@@ -376,13 +430,10 @@
               <p class="text-gray-500 text-sm">Just now</p>
             </div>
           </div>
-          <p class="text-lg">{config.first_line_message}</p>
-          <p class="text-lg">Save 30% with Code: Q2FYBW7O</p>
-          <p class="text-lg">21% OFF + $14 Clip Coupon</p>
-          <p class="text-lg font-bold">𝗢𝗡𝗟𝗬 $27.99! 💸✨</p>
-          <p class="text-lg mb-4">15W MagSafe Car Mount Charger</p>
-          <p class="text-lg pt-4">
-            {@html formatNewlines(config.bottom_line_message)}
+          <p class="text-lg pt-1">
+            {@html formatNewlines(
+              populateTemplate(config.custom_template, example_values),
+            )}
           </p>
         </div>
       </div>
